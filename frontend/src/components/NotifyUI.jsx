@@ -6,7 +6,7 @@ function getFormattedDate(date) {
 const currentDate = new Date();
 const NotifyUI = () => {
   return (
-    <div className="p-4 bg-gray-300 rounded-md w-fit flex justify-center gap-2 shadow-md flex-col">
+    <div className="p-4 mt-4 bg-gray-300 rounded-md w-fit flex justify-center gap-2 shadow-md flex-col">
       <h2 className='text-2xl font-medium'>LifeSync Notification</h2>
       <p>
         <span   className='font-medium'>GroupLeader</span> has removed <span  className='font-medium'>memberName</span> from the group <span className='font-medium'>groupName</span>. <br />
