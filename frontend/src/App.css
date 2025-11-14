@@ -1,9 +1,585 @@
+/* =======================================================
+   LifeSync – Light Dashboard Theme (style guide from pic2)
+   ======================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+/* ----- Design tokens (from your style guide) ----- */
+:root {
+  --ls-bg: #f5f5f7;
+  --ls-surface: #ffffff;
+  --ls-surface-soft: #fafafa;
+  --ls-border: #e5e7eb;
 
-@import "tailwindcss";
+  --ls-text: #1f2933;
+  --ls-text-muted: #6b7280;
 
+  --ls-primary: #1971d8;   /* Call to action blue */
+  --ls-secondary: #4a4a4a; /* Secondary text */
+  --ls-accent-green: #21a05d;
+  --ls-accent-red: #d20429;
+  --ls-accent-red-dark: #9a1e22;
+  --ls-primary-soft: #f0e7d5; /* light neutral / primary bg */
 
-#root {
-    font-family: 'Inter', sans-serif;
+  --ls-radius-lg: 18px;
+  --ls-radius-md: 12px;
+  --ls-radius-sm: 8px;
+
+  --ls-shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
+  --ls-shadow-card: 0 10px 30px rgba(15, 23, 42, 0.06);
+
+  --ls-transition: 0.18s ease-out;
+}
+
+/* ----- Global reset-ish ----- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--ls-bg);
+  color: var(--ls-text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI",
+    sans-serif;
+}
+
+/* helper */
+main {
+  padding-bottom: 3rem;
+}
+
+/* =======================================================
+   HEADER / NAV
+   ======================================================= */
+
+.ls-header {
+  background: var(--ls-surface);
+  border-bottom: 1px solid var(--ls-border);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
+}
+
+.ls-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.ls-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 0;
+}
+
+.ls-logo {
+  font-weight: 800;
+  font-size: 1.3rem;
+  letter-spacing: 0.05em;
+  color: var(--ls-secondary);
+}
+
+.ls-logo span {
+  color: var(--ls-primary);
+}
+
+.ls-nav-links {
+  display: flex;
+  gap: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.ls-nav-links a {
+  color: var(--ls-text-muted);
+  text-decoration: none;
+  position: relative;
+  padding-bottom: 0.25rem;
+  transition: color var(--ls-transition);
+}
+
+.ls-nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--ls-primary);
+  transition: width var(--ls-transition);
+}
+
+.ls-nav-links a:hover {
+  color: var(--ls-text);
+}
+
+.ls-nav-links a:hover::after,
+.ls-nav-links a.active::after {
+  width: 100%;
+}
+
+.ls-nav-auth {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* =======================================================
+   BUTTONS
+   ======================================================= */
+
+.ls-btn {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: transparent;
+  color: var(--ls-text);
+  transition: background var(--ls-transition), color var(--ls-transition),
+    border-color var(--ls-transition), transform var(--ls-transition),
+    box-shadow var(--ls-transition);
+}
+
+.ls-btn-primary {
+  background: var(--ls-primary);
+  color: #ffffff;
+  box-shadow: 0 12px 30px rgba(25, 113, 216, 0.35);
+}
+
+.ls-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 40px rgba(25, 113, 216, 0.45);
+}
+
+.ls-btn-outline {
+  border-color: var(--ls-border);
+  background: #ffffff;
+}
+
+.ls-btn-outline:hover {
+  background: var(--ls-surface-soft);
+}
+
+.ls-btn-ghost {
+  border-color: transparent;
+  background: transparent;
+  color: var(--ls-text-muted);
+}
+
+.ls-btn-ghost:hover {
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--ls-text);
+}
+
+.ls-btn-small {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+}
+
+.ls-btn-danger {
+  border-color: rgba(210, 4, 41, 0.35);
+  color: var(--ls-accent-red-dark);
+  background: rgba(250, 240, 242, 0.85);
+}
+
+.ls-btn-danger:hover {
+  background: rgba(244, 226, 229, 0.9);
+}
+
+/* =======================================================
+   HERO / TOP SECTION
+   ======================================================= */
+
+.ls-hero {
+  padding: 2.8rem 0 1.8rem;
+}
+
+.ls-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+  gap: 2.2rem;
+  align-items: center;
+}
+
+.ls-hero-text h1 {
+  font-size: clamp(2.4rem, 3.4vw, 2.9rem); /* Display 1-ish */
+  line-height: 1.2;
+  margin: 0 0 0.8rem;
+}
+
+.ls-hero-text p {
+  color: var(--ls-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.3rem;
+  font-size: 0.96rem;
+}
+
+.ls-hero-actions {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 0.9rem;
+}
+
+.ls-hero-sub {
+  color: var(--ls-text-muted);
+  font-size: 0.9rem;
+}
+
+/* Hero "Today at a glance" card */
+.ls-hero-card {
+  background: var(--ls-surface);
+  border-radius: var(--ls-radius-lg);
+  padding: 1.4rem 1.5rem;
+  box-shadow: var(--ls-shadow-soft);
+  border: 1px solid var(--ls-border);
+}
+
+.ls-hero-card h2 {
+  margin: 0 0 0.9rem;
+  font-size: 1.2rem;
+}
+
+.ls-stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 12px;
+  background: var(--ls-surface-soft);
+  border: 1px solid var(--ls-border);
+  overflow: hidden;
+}
+
+.ls-stats li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.9rem;
+}
+
+.ls-stats li + li {
+  border-top: 1px solid var(--ls-border);
+}
+
+.ls-stat-label {
+  color: var(--ls-text-muted);
+}
+
+.ls-stat-value {
+  font-weight: 600;
+}
+
+.ls-small {
+  margin-top: 0.7rem;
+  font-size: 0.78rem;
+  color: var(--ls-text-muted);
+}
+
+/* =======================================================
+   SECTIONS / HEADINGS
+   ======================================================= */
+
+.ls-section {
+  padding: 2.3rem 0;
+}
+
+.ls-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.35rem;
+}
+
+.ls-section-header h2 {
+  margin: 0;
+  font-size: 1.35rem; /* Heading 2 */
+}
+
+.ls-section-subtitle {
+  margin: 0;
+  color: var(--ls-text-muted);
+  font-size: 0.9rem;
+}
+
+/* =======================================================
+   MY GROUPS – FORM + CARDS
+   ======================================================= */
+
+.ls-group-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1rem 0 1.25rem;
+  padding: 1.1rem 1.15rem;
+  border-radius: var(--ls-radius-lg);
+  background: var(--ls-surface);
+  border: 1px solid var(--ls-border);
+  box-shadow: var(--ls-shadow-card);
+}
+
+.ls-group-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.ls-group-form input,
+.ls-group-form select,
+.ls-group-form textarea {
+  border-radius: 999px;
+  border: 1px solid var(--ls-border);
+  background: var(--ls-surface-soft);
+  color: var(--ls-text);
+  padding: 0.5rem 0.8rem;
+  font-size: 0.86rem;
+  outline: none;
+}
+
+.ls-group-form textarea {
+  border-radius: var(--ls-radius-md);
+  width: 100%;
+  resize: vertical;
+}
+
+.ls-group-form input:focus,
+.ls-group-form select:focus,
+.ls-group-form textarea:focus {
+  border-color: var(--ls-primary);
+  box-shadow: 0 0 0 1px rgba(25, 113, 216, 0.4);
+}
+
+/* labels stack in the second row (Members / Tasks / Completion) */
+.ls-group-form-row label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: var(--ls-text-muted);
+}
+
+/* first row – grow name, fixed select */
+.ls-group-form-row:first-of-type input[name="name"] {
+  flex: 1 1 220px;
+}
+
+.ls-group-form-row:first-of-type select[name="role"] {
+  min-width: 120px;
+}
+
+/* groups grid */
+.ls-groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.1rem;
+  margin-top: 0.4rem;
+}
+
+.ls-group-card {
+  background: var(--ls-surface);
+  border-radius: var(--ls-radius-lg);
+  padding: 1.05rem 1.15rem;
+  border: 1px solid var(--ls-border);
+  box-shadow: var(--ls-shadow-card);
+}
+
+.ls-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.ls-group-header h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.ls-badge {
+  font-size: 0.72rem;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--ls-primary);
+  color: var(--ls-primary);
+  background: rgba(25, 113, 216, 0.08);
+}
+
+.ls-badge-secondary {
+  border-color: var(--ls-accent-green);
+  color: var(--ls-accent-green);
+  background: rgba(33, 160, 93, 0.08);
+}
+
+.ls-badge-viewer {
+  border-color: var(--ls-secondary);
+  color: var(--ls-secondary);
+  background: rgba(148, 163, 184, 0.16);
+}
+
+.ls-group-desc {
+  margin: 0.3rem 0 0.7rem;
+  font-size: 0.86rem;
+  color: var(--ls-text-muted);
+}
+
+.ls-group-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin: 0 0 0.8rem;
+  font-size: 0.78rem;
+}
+
+.ls-group-meta div {
+  flex: 1;
+}
+
+.ls-group-meta dt {
+  color: var(--ls-text-muted);
+}
+
+.ls-group-meta dd {
+  margin: 0.1rem 0 0;
+  font-weight: 600;
+}
+
+.ls-group-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* =======================================================
+   QUICK ACTIONS + STORY GROUP CARDS (bottom)
+   ======================================================= */
+
+.ls-section-alt {
+  background: transparent;
+}
+
+.ls-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.ls-quick-card {
+  background: var(--ls-surface);
+  border-radius: var(--ls-radius-md);
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--ls-border);
+  box-shadow: var(--ls-shadow-card);
+  font-size: 0.9rem;
+}
+
+.ls-quick-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+.ls-quick-card p {
+  margin: 0 0 0.7rem;
+  color: var(--ls-text-muted);
+  font-size: 0.86rem;
+}
+
+.ls-quick-link {
+  font-size: 0.86rem;
+  color: var(--ls-primary);
+  text-decoration: none;
+}
+
+.ls-quick-link:hover {
+  text-decoration: underline;
+}
+
+/* story groups grid */
+.ls-story-group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.1rem;
+}
+
+.ls-story-group-card {
+  background: var(--ls-surface);
+  border-radius: var(--ls-radius-md);
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--ls-border);
+  box-shadow: var(--ls-shadow-card);
+}
+
+.ls-story-group-header h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+}
+
+.ls-story-group-desc {
+  margin: 0 0 0.7rem;
+  font-size: 0.86rem;
+  color: var(--ls-text-muted);
+}
+
+.ls-story-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.7rem;
+}
+
+.ls-story-chip {
+  font-size: 0.78rem;
+  padding: 0.16rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--ls-border);
+  background: var(--ls-surface-soft);
+}
+
+/* =======================================================
+   FOOTER
+   ======================================================= */
+
+.ls-footer {
+  border-top: 1px solid var(--ls-border);
+  padding: 1.5rem 0 1.8rem;
+  background: var(--ls-surface);
+}
+
+.ls-footer-inner {
+  text-align: center;
+}
+
+.ls-footer p {
+  margin: 0;
+}
+
+.ls-footer-small {
+  color: var(--ls-text-muted);
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}
+
+/* =======================================================
+   RESPONSIVE
+   ======================================================= */
+
+@media (max-width: 900px) {
+  .ls-hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .ls-nav-links {
+    display: none; /* simple mobile nav, can improve later */
+  }
+
+  .ls-group-form {
+    padding: 0.9rem 0.95rem;
+  }
 }
