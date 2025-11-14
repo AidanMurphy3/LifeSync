@@ -1,1 +1,1 @@
-# LifySync
+# LifySync Ltd.
