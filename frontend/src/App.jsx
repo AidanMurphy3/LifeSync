@@ -3,6 +3,12 @@ import React, { useState } from 'react'
 import { Routes, Route, Link } from 'react-router-dom'
 import './App.css'
 
+import './index.css'
+import DeleteConfirmation from './components/DeleteButton.jsx'
+import NotifyUI from './components/NotifyUI.jsx'
+import LeaveConfirmation from './components/LeaveButton.jsx'
+
+
 // high-level pages
 import GroupManagementPage from './pages/GroupManagementPage.jsx'
 import TaskHabitPage from './pages/TaskHabitPage.jsx'
@@ -107,6 +113,12 @@ function HomePage() {
 
   return (
     <>
+    <div className='p-4'>
+  <DeleteConfirmation />
+    <NotifyUI />
+    <LeaveConfirmation />
+    </div>
+
       {/* HERO SECTION */}
       <section className="ls-hero">
         <div className="ls-container ls-hero-grid">
@@ -382,6 +394,7 @@ function HomePage() {
       </section>
     </>
   )
+>>>>>>> dev
 }
 
 // ---------- ROOT APP WITH ROUTES ----------
