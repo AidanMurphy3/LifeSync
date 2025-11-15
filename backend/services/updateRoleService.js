@@ -13,8 +13,8 @@ const updateRole = async(data) => {
     groupMembership.save();
 
     const response = groupMembership.toObject();
-    response.groupMembershipId = _id;
+    response.groupMembershipId = response._id;
     delete response._id;
-    
+
     return response;
 }
