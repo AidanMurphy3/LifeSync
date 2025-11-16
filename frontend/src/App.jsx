@@ -1,13 +1,16 @@
 // src/App.jsx
+import React from "react";
 import { Routes, Route } from "react-router-dom";
+
 import "./App.css";
-import HomePage from "./pages/HomePage/homePage.jsx";
+import "@styles/main.css";
+
+// layout components
 import Nav from "@components/Nav/nav.jsx";
 import Footer from "@components/Footer/Footer.jsx";
 
-import "@styles/main.css";
-
 // high-level pages
+import HomePage from "./pages/HomePage/homePage.jsx";
 import GroupManagementPage from "./pages/GroupManagementPage.jsx";
 import TaskHabitPage from "./pages/TaskHabitPage.jsx";
 
@@ -38,11 +41,8 @@ function App() {
           {/* home */}
           <Route path="/" element={<HomePage />} />
 
-          {/* high-level grouped pages */}
+          {/* group management */}
           <Route path="/group-management" element={<GroupManagementPage />} />
-          <Route path="/task-habits" element={<TaskHabitPage />} />
-
-          {/* group management stories */}
           <Route path="/group/create" element={<CreateGroup />} />
           <Route path="/group/add-members" element={<AddMembers />} />
           <Route path="/group/edit" element={<EditGroup />} />
@@ -50,7 +50,8 @@ function App() {
           <Route path="/group/assign-roles" element={<AssignRoles />} />
           <Route path="/group/leave" element={<LeaveGroup />} />
 
-          {/* task & habit stories */}
+          {/* tasks & habits */}
+          <Route path="/task-habits" element={<TaskHabitPage />} />
           <Route path="/task/create" element={<CreateTaskHabit />} />
           <Route path="/task/assign" element={<AssignTask />} />
           <Route path="/task/edit" element={<EditTaskHabit />} />
