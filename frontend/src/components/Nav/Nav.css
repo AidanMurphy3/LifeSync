@@ -1,0 +1,28 @@
+.nav-link {
+  position: relative;
+  color: var(--ls-text-muted);
+  text-decoration: none;
+  padding-bottom: 0.25rem;
+  transition: color var(--ls-transition);
+}
+
+/* underline effect */
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0%;
+  height: 2px;
+  background: white;
+  transition: width var(--ls-transition);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: var(--ls-text);
+}
