@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import Card from "@components/Cards/Card";
 
 function HomePage() {
   const [groups, setGroups] = useState([
@@ -83,11 +84,6 @@ function HomePage() {
 
   return (
     <>
-      {/* <div className="p-4">
-        <DeleteConfirmation />
-        <NotifyUI />
-        <LeaveConfirmation />
-      </div> */}
       {/* HERO SECTION */}
       <section className="ls-hero">
         <div className="ls-container ls-hero-grid">
@@ -144,186 +140,23 @@ function HomePage() {
           </div>
         </div>
       </section>
-      MY GROUPS
+
+      {/* Group display */}
       <section className="ls-section">
         <div className="ls-container">
-          <div className="ls-section-header">
+          <div className="flex items-center justify-between mb-4">
             <h2>My Groups</h2>
-            <p className="ls-section-subtitle">
-              Add new groups or manage existing ones. Cards update instantly as
-              you change the data.
-            </p>
+            <Link to="/group/create">
+              <button className="ls-btn ls-btn-primary">+ Add Group</button>
+            </Link>
           </div>
-
-          <div className="ls-my-groups-grid">
-            {/* LEFT: FORM CARD */}
-            <div className="ls-card ls-group-form-card">
-              <h3>Create / update a group</h3>
-              <p className="ls-section-subtitle">
-                Quick mockup form for Iteration 1. Values here only affect the
-                dashboard on this page.
-              </p>
-
-              <form className="ls-group-form" onSubmit={handleAddGroup}>
-                {/* row 1: group name + role + button */}
-                <div className="ls-group-form-row">
-                  <div className="ls-field ls-field-grow">
-                    <label>
-                      Group name
-                      <input
-                        type="text"
-                        name="name"
-                        placeholder="Study group, Trip planning…"
-                        value={newGroup.name}
-                        onChange={handleNewGroupChange}
-                        required
-                      />
-                    </label>
-                  </div>
-
-                  <div className="ls-field">
-                    <label>
-                      Role
-                      <select
-                        name="role"
-                        value={newGroup.role}
-                        onChange={handleNewGroupChange}
-                      >
-                        <option>Owner</option>
-                        <option>Member</option>
-                        <option>Viewer</option>
-                      </select>
-                    </label>
-                  </div>
-
-                  <button
-                    className="ls-btn ls-btn-small ls-btn-primary"
-                    type="submit"
-                  >
-                    + Add Group
-                  </button>
-                </div>
-
-                {/* row 2: description */}
-                <div className="ls-group-form-row">
-                  <div className="ls-field ls-field-full">
-                    <label>
-                      Description
-                      <textarea
-                        name="description"
-                        placeholder="Short description of the group"
-                        value={newGroup.description}
-                        onChange={handleNewGroupChange}
-                        rows={2}
-                      />
-                    </label>
-                  </div>
-                </div>
-
-                {/* row 3: members / tasks / completion */}
-                <div className="ls-group-form-row">
-                  <div className="ls-field">
-                    <label>
-                      Members
-                      <input
-                        type="number"
-                        name="members"
-                        min="1"
-                        value={newGroup.members}
-                        onChange={handleNewGroupChange}
-                      />
-                    </label>
-                  </div>
-
-                  <div className="ls-field">
-                    <label>
-                      Tasks
-                      <input
-                        type="number"
-                        name="tasks"
-                        min="0"
-                        value={newGroup.tasks}
-                        onChange={handleNewGroupChange}
-                      />
-                    </label>
-                  </div>
-
-                  <div className="ls-field">
-                    <label>
-                      Completion %
-                      <input
-                        type="number"
-                        name="completion"
-                        min="0"
-                        max="100"
-                        value={newGroup.completion}
-                        onChange={handleNewGroupChange}
-                      />
-                    </label>
-                  </div>
-                </div>
-              </form>
-            </div>
-
-            {/* RIGHT: GROUP CARDS GRID */}
-            <div className="ls-groups-grid">
-              {groups.map((group) => (
-                <article key={group.id} className="ls-group-card">
-                  <div className="ls-group-header">
-                    <h3>{group.name}</h3>
-                    <span
-                      className={
-                        group.role === "Member"
-                          ? "ls-badge ls-badge-secondary"
-                          : group.role === "Viewer"
-                          ? "ls-badge ls-badge-viewer"
-                          : "ls-badge"
-                      }
-                    >
-                      {group.role}
-                    </span>
-                  </div>
-
-                  <p className="ls-group-desc">
-                    {group.description || "No description provided."}
-                  </p>
-
-                  <dl className="ls-group-meta">
-                    <div>
-                      <dt>Members</dt>
-                      <dd>{group.members}</dd>
-                    </div>
-                    <div>
-                      <dt>Active tasks</dt>
-                      <dd>{group.tasks}</dd>
-                    </div>
-                    <div>
-                      <dt>Completion rate</dt>
-                      <dd>{group.completion}%</dd>
-                    </div>
-                  </dl>
-
-                  <div className="ls-group-actions">
-                    <button className="ls-btn ls-btn-small ls-btn-primary">
-                      Open group
-                    </button>
-                    <button className="ls-btn ls-btn-small">
-                      View members
-                    </button>
-                    <button
-                      type="button"
-                      className="ls-btn ls-btn-small ls-btn-danger"
-                      onClick={() => handleDeleteGroup(group.id)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </article>
-              ))}
-            </div>
+          <div className="grid grid-cols-2 gap-[30px] p-10">
+            <Card />
+            <Card />
           </div>
         </div>
       </section>
+
       {/* QUICK ACTIONS */}
       <section className="ls-section ls-section-alt">
         <div className="ls-container">

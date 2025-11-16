@@ -12,7 +12,7 @@ function Nav() {
       <div className="max-w-[1120px] h-full w-full mx-auto px-4 flex items-center justify-between">
         {/* LOGO */}
         <div className="font-extrabold text-[36px] tracking-wide text-[var(--ls-text-muted)]">
-          Life<span className="text-[var(--ls-primary)]">Sync</span>
+          Life<span className="text-[var(--ls-text-muted)]">Sync</span>
         </div>
 
         {/* NAV */}

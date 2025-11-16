@@ -1,12 +1,121 @@
-import React from 'react'
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-const CreateGroup = () => (
-  <section className="ls-page">
-    <div className="ls-container">
-      <h1>GS1 – Create Group</h1>
-      <p>Skeleton page. Add the group creation form and logic here.</p>
-    </div>
-  </section>
-)
+function CreateGroup() {
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
 
-export default CreateGroup
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("Group Created:", {
+      name,
+      description,
+      category,
+    });
+
+    try {
+      const res = await fetch("https://lifesync-ufkl.onrender.com/api/groups", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, description, category }),
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to create group");
+      }
+
+      const data = await res.json();
+      console.log("Group saved to backend:", data);
+
+      // redirect after success
+      navigate("/group-management");
+    } catch (error) {
+      console.error("Error creating group:", error);
+    }
+  };
+
+  return (
+    <section className="ls-page">
+      <div className="ls-container">
+        <h1>Create Group</h1>
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          {/* Group Name */}
+          <div>
+            <label className="block mb-2 font-medium text-gray-700">
+              Group Name
+            </label>
+            <input
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="e.g. Fitness Team, Study Group"
+              required
+            />
+          </div>
+
+          {/* Description */}
+          <div>
+            <label className="block mb-2 font-medium text-gray-700">
+              Description
+            </label>
+            <textarea
+              placeholder="Describe your group purpose..."
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 h-28 
+                       focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+
+          {/* Category */}
+          <div>
+            <label className="block mb-2 font-medium text-gray-700">
+              Category
+            </label>
+
+            <select
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 
+                       focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Choose a category</option>
+              <option value="health">Health & Fitness</option>
+              <option value="study">Study Group</option>
+              <option value="work">Work / Team</option>
+              <option value="family">Family</option>
+              <option value="habit">Habit Tracking</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          {/* BUTTONS */}
+          <div className="flex justify-end gap-4 pt-4 mt-6">
+            {/* Cancel */}
+            <button
+              type="button"
+              onClick={() => navigate(-1)}
+              className="ls-btn bg-[var(--ls-accent-red)]"
+            >
+              Cancel
+            </button>
+
+            {/* Save */}
+            <button type="submit" className="ls-btn ls-btn-primary">
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  );
+}
+
+export default CreateGroup;

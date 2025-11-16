@@ -2,14 +2,14 @@
 
 :root {
   --ls-bg: #f5f5f7;
-  --ls-surface: #24a95e;
+  --ls-surface: #24a95e; /*Main */
   --ls-surface-soft: #fafafa;
   --ls-border: #e5e7eb;
 
   --ls-text: #1f2933;
   --ls-text-muted: white;
 
-  --ls-primary: #1971d8; /* Call to action blue */
+  --ls-primary: #24a95e; /* Call to action blue */
   --ls-secondary: #4a4a4a; /* Secondary text */
   --ls-accent-green: #21a05d;
   --ls-accent-red: #d20429;
