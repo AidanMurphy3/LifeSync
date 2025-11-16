@@ -1,123 +1,121 @@
 // src/App.jsx
-import React, { useState } from 'react'
-import { Routes, Route, Link } from 'react-router-dom'
-import './App.css'
+import React, { useState } from "react";
+import { Routes, Route, Link } from "react-router-dom";
+import "./App.css";
 
-import './index.css'
-import DeleteConfirmation from './components/DeleteButton.jsx'
-import NotifyUI from './components/NotifyUI.jsx'
-import LeaveConfirmation from './components/LeaveButton.jsx'
-
+import "./index.css";
+import DeleteConfirmation from "./components/DeleteButton.jsx";
+import NotifyUI from "./components/NotifyUI.jsx";
+import LeaveConfirmation from "./components/LeaveButton.jsx";
 
 // high-level pages
-import GroupManagementPage from './pages/GroupManagementPage.jsx'
-import TaskHabitPage from './pages/TaskHabitPage.jsx'
+import GroupManagementPage from "./pages/GroupManagementPage.jsx";
+import TaskHabitPage from "./pages/TaskHabitPage.jsx";
 
 // group management story pages
-import CreateGroup from './pages/GroupManagement/CreateGroup.jsx'
-import AddMembers from './pages/GroupManagement/AddMembers.jsx'
-import EditGroup from './pages/GroupManagement/EditGroup.jsx'
-import DeleteGroup from './pages/GroupManagement/DeleteGroup.jsx'
-import AssignRoles from './pages/GroupManagement/AssignRoles.jsx'
-import LeaveGroup from './pages/GroupManagement/LeaveGroup.jsx'
+import CreateGroup from "./pages/GroupManagement/CreateGroup.jsx";
+import AddMembers from "./pages/GroupManagement/AddMembers.jsx";
+import EditGroup from "./pages/GroupManagement/EditGroup.jsx";
+import DeleteGroup from "./pages/GroupManagement/DeleteGroup.jsx";
+import AssignRoles from "./pages/GroupManagement/AssignRoles.jsx";
+import LeaveGroup from "./pages/GroupManagement/LeaveGroup.jsx";
 
 // task/habit story pages
-import CreateTaskHabit from './pages/TaskHabit/CreateTaskHabit.jsx'
-import AssignTask from './pages/TaskHabit/AssignTask.jsx'
-import EditTaskHabit from './pages/TaskHabit/EditTaskHabit.jsx'
-import ApproveTaskHabit from './pages/TaskHabit/ApproveTaskHabit.jsx'
-import MemberAddTaskHabit from './pages/TaskHabit/MemberAddTaskHabit.jsx'
-import ViewMemberTasks from './pages/TaskHabit/ViewMemberTasks.jsx'
-import ViewerTaskStatus from './pages/TaskHabit/ViewerTaskStatus.jsx'
-
+import CreateTaskHabit from "./pages/TaskHabit/CreateTaskHabit.jsx";
+import AssignTask from "./pages/TaskHabit/AssignTask.jsx";
+import EditTaskHabit from "./pages/TaskHabit/EditTaskHabit.jsx";
+import ApproveTaskHabit from "./pages/TaskHabit/ApproveTaskHabit.jsx";
+import MemberAddTaskHabit from "./pages/TaskHabit/MemberAddTaskHabit.jsx";
+import ViewMemberTasks from "./pages/TaskHabit/ViewMemberTasks.jsx";
+import ViewerTaskStatus from "./pages/TaskHabit/ViewerTaskStatus.jsx";
 
 function HomePage() {
   const [groups, setGroups] = useState([
     {
       id: 1,
-      name: 'Roommate Chores',
-      role: 'Owner',
-      description: 'Weekly cleaning, trash rotation, dishes, and grocery runs.',
+      name: "Roommate Chores",
+      role: "Owner",
+      description: "Weekly cleaning, trash rotation, dishes, and grocery runs.",
       members: 4,
       tasks: 9,
-      completion: 74
+      completion: 74,
     },
     {
       id: 2,
-      name: 'Fitness Challenge',
-      role: 'Member',
-      description: 'Shared workout habits, step goals, and weekly check-ins.',
+      name: "Fitness Challenge",
+      role: "Member",
+      description: "Shared workout habits, step goals, and weekly check-ins.",
       members: 6,
       tasks: 5,
-      completion: 89
+      completion: 89,
     },
     {
       id: 3,
-      name: 'Trip Planning',
-      role: 'Viewer',
+      name: "Trip Planning",
+      role: "Viewer",
       description:
-        'Packing checklist, bookings, and travel tasks – read-only access.',
+        "Packing checklist, bookings, and travel tasks – read-only access.",
       members: 5,
       tasks: 12,
-      completion: 61
-    }
-  ])
+      completion: 61,
+    },
+  ]);
 
   const [newGroup, setNewGroup] = useState({
-    name: '',
-    role: 'Owner',
-    description: '',
+    name: "",
+    role: "Owner",
+    description: "",
     members: 1,
     tasks: 0,
-    completion: 0
-  })
+    completion: 0,
+  });
 
   const handleNewGroupChange = (e) => {
-    const { name, value } = e.target
+    const { name, value } = e.target;
     setNewGroup((prev) => ({
       ...prev,
       [name]:
-        name === 'members' || name === 'tasks' || name === 'completion'
+        name === "members" || name === "tasks" || name === "completion"
           ? Number(value)
-          : value
-    }))
-  }
+          : value,
+    }));
+  };
 
   const handleAddGroup = (e) => {
-    e.preventDefault()
-    if (!newGroup.name.trim()) return
+    e.preventDefault();
+    if (!newGroup.name.trim()) return;
 
-    const nextId = groups.length ? Math.max(...groups.map((g) => g.id)) + 1 : 1
+    const nextId = groups.length ? Math.max(...groups.map((g) => g.id)) + 1 : 1;
 
     setGroups((prev) => [
       ...prev,
       {
         ...newGroup,
-        id: nextId
-      }
-    ])
+        id: nextId,
+      },
+    ]);
 
     setNewGroup({
-      name: '',
-      role: 'Owner',
-      description: '',
+      name: "",
+      role: "Owner",
+      description: "",
       members: 1,
       tasks: 0,
-      completion: 0
-    })
-  }
+      completion: 0,
+    });
+  };
 
   const handleDeleteGroup = (id) => {
-    setGroups((prev) => prev.filter((g) => g.id !== id))
-  }
+    setGroups((prev) => prev.filter((g) => g.id !== id));
+  };
 
   return (
     <>
-    <div className='p-4'>
-  <DeleteConfirmation />
-    <NotifyUI />
-    <LeaveConfirmation />
-    </div>
+      <div className="p-4">
+        <DeleteConfirmation />
+        <NotifyUI />
+        <LeaveConfirmation />
+      </div>
 
       {/* HERO SECTION */}
       <section className="ls-hero">
@@ -125,11 +123,11 @@ function HomePage() {
           <div className="ls-hero-text">
             <h1>Coordinate habits, tasks, and goals with your group.</h1>
             <p>
-              LifeSync helps roommates, friends, and teams{' '}
-              <strong>track shared habits</strong>,{' '}
-              <strong>assign tasks fairly</strong>, and{' '}
-              <strong>stay accountable</strong> with clear dashboards and
-              smart suggestions.
+              LifeSync helps roommates, friends, and teams{" "}
+              <strong>track shared habits</strong>,{" "}
+              <strong>assign tasks fairly</strong>, and{" "}
+              <strong>stay accountable</strong> with clear dashboards and smart
+              suggestions.
             </p>
 
             <div className="ls-hero-actions">
@@ -309,11 +307,11 @@ function HomePage() {
                     <h3>{group.name}</h3>
                     <span
                       className={
-                        group.role === 'Member'
-                          ? 'ls-badge ls-badge-secondary'
-                          : group.role === 'Viewer'
-                          ? 'ls-badge ls-badge-viewer'
-                          : 'ls-badge'
+                        group.role === "Member"
+                          ? "ls-badge ls-badge-secondary"
+                          : group.role === "Viewer"
+                          ? "ls-badge ls-badge-viewer"
+                          : "ls-badge"
                       }
                     >
                       {group.role}
@@ -321,7 +319,7 @@ function HomePage() {
                   </div>
 
                   <p className="ls-group-desc">
-                    {group.description || 'No description provided.'}
+                    {group.description || "No description provided."}
                   </p>
 
                   <dl className="ls-group-meta">
@@ -374,7 +372,10 @@ function HomePage() {
                 All Iteration 1 group-owner stories (create/edit/delete group,
                 add members, assign roles) live on this page.
               </p>
-              <Link className="ls-btn ls-btn-small ls-btn-primary" to="/group-management">
+              <Link
+                className="ls-btn ls-btn-small ls-btn-primary"
+                to="/group-management"
+              >
                 Open Group Management
               </Link>
             </div>
@@ -385,7 +386,10 @@ function HomePage() {
                 All Iteration 1 task and habit stories (create/assign/edit, view
                 status) live on this page.
               </p>
-              <Link className="ls-btn ls-btn-small ls-btn-primary" to="/task-habits">
+              <Link
+                className="ls-btn ls-btn-small ls-btn-primary"
+                to="/task-habits"
+              >
                 Open Task &amp; Habit Management
               </Link>
             </div>
@@ -393,8 +397,7 @@ function HomePage() {
         </div>
       </section>
     </>
-  )
->>>>>>> dev
+  );
 }
 
 // ---------- ROOT APP WITH ROUTES ----------
@@ -453,7 +456,7 @@ function App() {
         </div>
       </footer>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
