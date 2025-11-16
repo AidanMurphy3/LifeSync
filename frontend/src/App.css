@@ -1,134 +1,7 @@
-/* =======================================================
-   LifeSync – Light Dashboard Theme (style guide from pic2)
-   ======================================================= */
-
-/* ----- Design tokens (from your style guide) ----- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
-
-:root {
-  --ls-bg: #f5f5f7;
-  --ls-surface: #ffffff;
-  --ls-surface-soft: #fafafa;
-  --ls-border: #e5e7eb;
-
-  --ls-text: #1f2933;
-  --ls-text-muted: #6b7280;
-
-  --ls-primary: #1971d8;   /* Call to action blue */
-  --ls-secondary: #4a4a4a; /* Secondary text */
-  --ls-accent-green: #21a05d;
-  --ls-accent-red: #d20429;
-  --ls-accent-red-dark: #9a1e22;
-  --ls-primary-soft: #f0e7d5; /* light neutral / primary bg */
-
-  --ls-radius-lg: 18px;
-  --ls-radius-md: 12px;
-  --ls-radius-sm: 8px;
-
-  --ls-shadow-soft: 0 18px 40px rgba(15, 23, 42, 0.08);
-  --ls-shadow-card: 0 10px 30px rgba(15, 23, 42, 0.06);
-
-  --ls-transition: 0.18s ease-out;
-}
-
-/* ----- Global reset-ish ----- */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background: var(--ls-bg);
-  color: var(--ls-text);
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI",
-    sans-serif;
-}
-
-/* helper */
-main {
-  padding-bottom: 3rem;
-}
-
-/* =======================================================
-   HEADER / NAV
-   ======================================================= */
-
-.ls-header {
-  background: var(--ls-surface);
-  border-bottom: 1px solid var(--ls-border);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
-}
-
 .ls-container {
   max-width: 1120px;
   margin: 0 auto;
   padding: 0 1.5rem;
-}
-
-.ls-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.9rem 0;
-}
-
-.ls-logo {
-  font-weight: 800;
-  font-size: 1.3rem;
-  letter-spacing: 0.05em;
-  color: var(--ls-secondary);
-}
-
-.ls-logo span {
-  color: var(--ls-primary);
-}
-
-.ls-nav-links {
-  display: flex;
-  gap: 1.5rem;
-  font-size: 0.95rem;
-}
-
-.ls-nav-links a {
-  color: var(--ls-text-muted);
-  text-decoration: none;
-  position: relative;
-  padding-bottom: 0.25rem;
-  transition: color var(--ls-transition);
-}
-
-.ls-nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0%;
-  height: 2px;
-  background: var(--ls-primary);
-  transition: width var(--ls-transition);
-}
-
-.ls-nav-links a:hover {
-  color: var(--ls-text);
-}
-
-.ls-nav-links a:hover::after,
-.ls-nav-links a.active::after {
-  width: 100%;
-}
-
-.ls-nav-auth {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
 }
 
 /* =======================================================
@@ -151,12 +24,12 @@ main {
 .ls-btn-primary {
   background: var(--ls-primary);
   color: #ffffff;
-  box-shadow: 0 12px 30px rgba(25, 113, 216, 0.35);
+  box-shadow: 0 12px 30px #24a95e;
 }
 
 .ls-btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 16px 40px rgba(25, 113, 216, 0.45);
+  box-shadow: 0 16px 40px #24a95e;
 }
 
 .ls-btn-outline {
@@ -269,7 +142,7 @@ main {
 }
 
 .ls-stat-label {
-  color: var(--ls-text-muted);
+  color: black;
 }
 
 .ls-stat-value {
