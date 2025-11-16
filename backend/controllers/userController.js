@@ -3,6 +3,8 @@
 const User = require("../models/User.js");
 const bcrypt = require("bcryptjs");
 
+const ChangePermissionService = require("../services/changePermissionService.js");
+
 //GET ALL USERS
 const getUsers = async (req, res) => {
     try
@@ -73,4 +75,22 @@ const deleteUser = async (req, res) => {
     }
 };
 
-module.exports = {deleteUser, addUser, getUsers};
+// Change permission
+
+const changePermission = async(req, res) => {
+    try{
+        const response = ChangePermissionService.changePermission(req.body);
+
+        res.status(201).json({ 
+            message: 'Change permission successfully!', 
+            data: response
+        });
+    }catch(error){
+        res.status(500).json({ 
+            message: 'Failed to change permission!', 
+            error: error.message 
+        });
+    }
+}
+
+module.exports = {deleteUser, addUser, getUsers, changePermission};
