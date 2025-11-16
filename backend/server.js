@@ -13,15 +13,19 @@ connectDB();
 
 const app = express();
 
-// ------------------------------------
-// FIX: ENABLE CORS FOR FRONTEND
-// ------------------------------------
 app.use(
   cors({
-    origin: "*", // allow all sources (for testing)
+    origin: [
+      "http://localhost:5173",
+      "https://cerulean-cuchufli-06478a.netlify.app",
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
   })
 );
+
+app.options("*", cors());
 
 app.use(express.json());
 

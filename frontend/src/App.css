@@ -1,75 +1,7 @@
-/* =======================================================
-   HEADER / NAV
-   ======================================================= */
-
-.ls-header {
-  background: var(--ls-surface);
-  border-bottom: 1px solid var(--ls-border);
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.03);
-}
-
 .ls-container {
   max-width: 1120px;
   margin: 0 auto;
   padding: 0 1.5rem;
-}
-
-.ls-nav {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.9rem 0;
-}
-
-.ls-logo {
-  font-weight: 800;
-  font-size: 1.3rem;
-  letter-spacing: 0.05em;
-  color: var(--ls-secondary);
-}
-
-.ls-logo span {
-  color: var(--ls-primary);
-}
-
-.ls-nav-links {
-  display: flex;
-  gap: 1.5rem;
-  font-size: 0.95rem;
-}
-
-.ls-nav-links a {
-  color: var(--ls-text-muted);
-  text-decoration: none;
-  position: relative;
-  padding-bottom: 0.25rem;
-  transition: color var(--ls-transition);
-}
-
-.ls-nav-links a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0%;
-  height: 2px;
-  background: var(--ls-primary);
-  transition: width var(--ls-transition);
-}
-
-.ls-nav-links a:hover {
-  color: var(--ls-text);
-}
-
-.ls-nav-links a:hover::after,
-.ls-nav-links a.active::after {
-  width: 100%;
-}
-
-.ls-nav-auth {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
 }
 
 /* =======================================================
