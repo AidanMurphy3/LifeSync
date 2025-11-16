@@ -5,6 +5,8 @@ function CreateGroup() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
+  const [groupType, setGroupType] = useState("");
+  const [privacySetting, setPrivacySetting] = useState("");
 
   const navigate = useNavigate();
 
@@ -16,13 +18,20 @@ function CreateGroup() {
       category,
     });
 
+    const newGroup = {
+      name,
+      description,
+      groupType,
+      privacySetting,
+    };
+
     try {
       const res = await fetch("https://lifesync-ufkl.onrender.com/api/groups", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, description, category }),
+        body: JSON.stringify(newGroup),
       });
 
       if (!res.ok) {
@@ -74,7 +83,7 @@ function CreateGroup() {
             />
           </div>
 
-          {/* Category */}
+          {/*  Group Type */}
           <div>
             <label className="block mb-2 font-medium text-gray-700">
               Category
@@ -86,13 +95,30 @@ function CreateGroup() {
               className="w-full border border-gray-300 rounded-lg px-4 py-2 
                        focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-              <option value="">Choose a category</option>
+              <option value="">Choose a group type</option>
               <option value="health">Health & Fitness</option>
               <option value="study">Study Group</option>
               <option value="work">Work / Team</option>
               <option value="family">Family</option>
               <option value="habit">Habit Tracking</option>
               <option value="other">Other</option>
+            </select>
+          </div>
+
+          {/* Privacy Setting */}
+          <div>
+            <label className="block mb-2 font-medium text-gray-700">
+              Privacy Setting
+            </label>
+            <select
+              value={privacySetting}
+              onChange={(e) => setPrivacySetting(e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-4 py-2 
+                       focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="">Choose privacy setting</option>
+              <option value="Private">Private</option>
+              <option value="Public">Public</option>
             </select>
           </div>
 

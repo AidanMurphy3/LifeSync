@@ -27,16 +27,13 @@ app.use(express.json());
 
 const PORT = process.env.PORT || 3000;
 
-<<<<<<< HEAD
 // ROUTES
 app.use("/api/users", userRoutes);
 app.use("/api/groups", groupRoutes);
 app.use("/api/tasks", tasksRoutes);
-=======
-app.use('/api/users', userRoutes);
-app.use('/api/groups', groupRoutes);
-app.use('/api/groupMemberships', groupMembershipRoutes);
-app.use('/api/tasks', taskRoutes);
->>>>>>> cfe99b0f6ad4c0cd223d1f6742e7b0eb520795a4
+app.use("/api/users", userRoutes);
+app.use("/api/groups", groupRoutes);
+app.use("/api/groupMemberships", groupMembershipRoutes);
+app.use("/api/tasks", taskRoutes);
 
 app.listen(PORT, () => console.log(`Server running on PORT:${PORT}`));

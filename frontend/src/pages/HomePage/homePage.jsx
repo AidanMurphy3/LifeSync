@@ -1,47 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Card from "@components/Cards/Card";
 
 function HomePage() {
-  const [groups, setGroups] = useState([
-    {
-      id: 1,
-      name: "Roommate Chores",
-      role: "Owner",
-      description: "Weekly cleaning, trash rotation, dishes, and grocery runs.",
-      members: 4,
-      tasks: 9,
-      completion: 74,
-    },
-    {
-      id: 2,
-      name: "Fitness Challenge",
-      role: "Member",
-      description: "Shared workout habits, step goals, and weekly check-ins.",
-      members: 6,
-      tasks: 5,
-      completion: 89,
-    },
-    {
-      id: 3,
-      name: "Trip Planning",
-      role: "Viewer",
-      description:
-        "Packing checklist, bookings, and travel tasks – read-only access.",
-      members: 5,
-      tasks: 12,
-      completion: 61,
-    },
-  ]);
+  const [groups, setGroups] = useState([]);
 
-  const [newGroup, setNewGroup] = useState({
-    name: "",
-    role: "Owner",
-    description: "",
-    members: 1,
-    tasks: 0,
-    completion: 0,
-  });
+  useEffect(() => {
+    fetch("https://lifesync-ufkl.onrender.com/api/groups")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Fetched groups:", data);
+        setGroups(data);
+      })
+      .catch((err) => console.error("Error fetching:", err));
+  }, []);
 
   const handleNewGroupChange = (e) => {
     const { name, value } = e.target;
