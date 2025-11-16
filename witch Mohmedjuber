@@ -1,0 +1,8 @@
+[33mc1a22f4[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdev[m[33m, [m[1;31morigin/kghale[m[33m, [m[1;31morigin/dev[m[33m)[m HEAD@{0}: pull: Fast-forward
+[33m3b75811[m HEAD@{1}: checkout: moving from Mohmedjuber to dev
+[33m84ef20e[m[33m ([m[1;31morigin/Mohmedjuber[m[33m, [m[1;32mMohmedjuber[m[33m)[m HEAD@{2}: commit: created home page
+[33m881d21e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{3}: checkout: moving from dev to Mohmedjuber
+[33m3b75811[m HEAD@{4}: checkout: moving from Mohmedjuber to dev
+[33m881d21e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{5}: reset: moving to HEAD
+[33m881d21e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{6}: checkout: moving from main to Mohmedjuber
+[33m881d21e[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m HEAD@{7}: clone: from https://github.com/T4F25/LifeSync.git
