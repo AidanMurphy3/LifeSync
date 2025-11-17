@@ -22,9 +22,6 @@ app.use(
   })
 );
 
-// Preflight requests
-app.options("/*", cors());
-
 app.use(express.json());
 
 // ROUTES
@@ -33,10 +30,7 @@ app.use("/api/groups", groupRoutes);
 app.use("/api/groupMemberships", groupMembershipRoutes);
 app.use("/api/tasks", taskRoutes);
 
-// Catch-all route (optional: for React SPA)
-app.get("/*", (req, res) => {
-  res.status(404).json({ message: "Route not found" });
-});
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on PORT:${PORT}`));
