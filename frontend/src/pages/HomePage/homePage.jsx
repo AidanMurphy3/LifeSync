@@ -90,7 +90,6 @@ function HomePage() {
               <li>
                 <span className="ls-stat-label">Tasks (total)</span>
                 <span className="ls-stat-value">
-                  {groups.reduce((sum, g) => sum + g.tasks, 0)}
                 </span>
               </li>
               <li>
@@ -98,7 +97,6 @@ function HomePage() {
                 <span className="ls-stat-value">
                   {groups.length
                     ? Math.round(
-                        groups.reduce((sum, g) => sum + g.completion, 0) /
                           groups.length
                       )
                     : 0}
