@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import GroupDashboard from './GroupManagement/Dashboard'
 
 const GroupManagementPage = () => {
   return (
@@ -10,9 +11,9 @@ const GroupManagementPage = () => {
           Skeleton page for group-related user stories (GS1, GS2, GS3, GS5,
           GS17, MemS3).
         </p>
+        <GroupDashboard/>
 
         <ul>
-          <li><Link to="/group/create">GS1 – Create Group</Link></li>
           <li><Link to="/group/add-members">GS2 – Add Members</Link></li>
           <li><Link to="/group/edit">GS3 – Edit Group</Link></li>
           <li><Link to="/group/delete">GS5 – Delete Group</Link></li>
