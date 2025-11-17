@@ -1,0 +1,19 @@
+.ls-footer {
+  border-top: 1px solid var(--ls-border);
+  padding: 1.5rem 0 1.8rem;
+  background: var(--ls-surface);
+}
+
+.ls-footer-inner {
+  text-align: center;
+}
+
+.ls-footer p {
+  margin: 0;
+}
+
+.ls-footer-small {
+  color: var(--ls-text-muted);
+  font-size: 0.8rem;
+  margin-top: 0.3rem;
+}

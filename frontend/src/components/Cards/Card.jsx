@@ -17,7 +17,7 @@ function Card() {
           </ul>
         </div>
       </div>
-      <Link to="/group/create" className="mt-auto self-end">
+      <Link to="/api/groups" className="mt-auto self-end">
         <button className="ls-btn ls-btn-primary">View Group</button>
       </Link>
     </div>

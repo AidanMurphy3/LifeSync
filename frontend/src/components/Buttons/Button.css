@@ -1,0 +1,62 @@
+/* =======================================================
+   BUTTONS
+   ======================================================= */
+
+.ls-btn {
+  border-radius: 999px;
+  border: 1px solid transparent;
+  padding: 0.5rem 1.2rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  background: transparent;
+  color: var(--ls-text);
+  transition: background var(--ls-transition), color var(--ls-transition),
+    border-color var(--ls-transition), transform var(--ls-transition),
+    box-shadow var(--ls-transition);
+}
+
+.ls-btn-primary {
+  background: var(--ls-primary);
+  color: #ffffff;
+  box-shadow: 0 12px 30px #24a95e;
+}
+
+.ls-btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 40px #24a95e;
+}
+
+.ls-btn-outline {
+  border-color: var(--ls-border);
+  background: #ffffff;
+}
+
+.ls-btn-outline:hover {
+  background: var(--ls-surface-soft);
+}
+
+.ls-btn-ghost {
+  border-color: transparent;
+  background: transparent;
+  color: var(--ls-text-muted);
+}
+
+.ls-btn-ghost:hover {
+  background: rgba(148, 163, 184, 0.12);
+  color: var(--ls-text);
+}
+
+.ls-btn-small {
+  padding: 0.35rem 0.9rem;
+  font-size: 0.8rem;
+}
+
+.ls-btn-danger {
+  border-color: rgba(210, 4, 41, 0.35);
+  color: var(--ls-accent-red-dark);
+  background: rgba(250, 240, 242, 0.85);
+}
+
+.ls-btn-danger:hover {
+  background: rgba(244, 226, 229, 0.9);
+}

@@ -1,6 +1,8 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./Nav.css";
+import { CgProfile } from "react-icons/cg";
+import { FaBell } from "react-icons/fa6";
 
 function Nav() {
   const location = useLocation();
@@ -20,12 +22,15 @@ function Nav() {
           <Link to="/" className="nav-link">
             Home
           </Link>
-          <Link to="/group-management" className="nav-link">
-            Group Management
+          <Link to="/Authentication" className="nav-link">
+            Sign Up <CgProfile />
           </Link>
-          <Link to="/task-habits" className="nav-link">
-            Task & Habits
-          </Link>
+          <FaBell
+            className="h-[24px] w-[24px] text-[var(--ls-text-muted)] cursor-pointer"
+            onClick={() => {
+              console.log("bell");
+            }}
+          />
         </nav>
       </div>
     </header>

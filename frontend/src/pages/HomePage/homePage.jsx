@@ -89,18 +89,12 @@ function HomePage() {
               </li>
               <li>
                 <span className="ls-stat-label">Tasks (total)</span>
-                <span className="ls-stat-value">
-                </span>
+                <span className="ls-stat-value"></span>
               </li>
               <li>
                 <span className="ls-stat-label">Avg. completion</span>
                 <span className="ls-stat-value">
-                  {groups.length
-                    ? Math.round(
-                          groups.length
-                      )
-                    : 0}
-                  %
+                  {groups.length ? Math.round(groups.length) : 0}%
                 </span>
               </li>
             </ul>

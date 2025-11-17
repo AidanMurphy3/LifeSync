@@ -22,3 +22,29 @@ body {
 main {
   padding-bottom: 3rem;
 }
+
+.ls-container {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* =======================================================
+   RESPONSIVE
+   ======================================================= */
+
+@media (max-width: 900px) {
+  .ls-hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .ls-nav-links {
+    display: none; /* simple mobile nav, can improve later */
+  }
+
+  .ls-group-form {
+    padding: 0.9rem 0.95rem;
+  }
+}

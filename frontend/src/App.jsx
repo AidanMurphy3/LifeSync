@@ -10,9 +10,10 @@ import Nav from "@components/Nav/nav.jsx";
 import Footer from "@components/Footer/Footer.jsx";
 
 // high-level pages
-import HomePage from "./pages/HomePage/homePage.jsx";
-import GroupManagementPage from "./pages/GroupManagementPage.jsx";
-import TaskHabitPage from "./pages/TaskHabitPage.jsx";
+import HomePage from "@pages/HomePage/homePage.jsx";
+import GroupManagementPage from "@pages/GroupManagementPage.jsx";
+import TaskHabitPage from "@pages/TaskHabitPage.jsx";
+import Authen from "@pages/LoginSignUp/Login.jsx";
 
 // group management story pages
 import CreateGroup from "./pages/GroupManagement/CreateGroup.jsx";
@@ -33,13 +34,15 @@ import ViewerTaskStatus from "./pages/TaskHabit/ViewerTaskStatus.jsx";
 
 function App() {
   return (
-    <div className="ls-app">
+    <div className="min-h-screen flex flex-col">
       <Nav />
 
-      <main>
+      <main className="flex-1">
         <Routes>
           {/* home */}
           <Route path="/" element={<HomePage />} />
+
+          <Route path="/Authentication" element={<Authen />} />
 
           {/* group management */}
           <Route path="/group-management" element={<GroupManagementPage />} />
