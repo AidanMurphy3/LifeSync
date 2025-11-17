@@ -60,3 +60,9 @@
 .ls-btn-danger:hover {
   background: rgba(244, 226, 229, 0.9);
 }
+
+.ls-btn-return {
+  border: 1px solid;
+  color: white;
+  background: black;
+}

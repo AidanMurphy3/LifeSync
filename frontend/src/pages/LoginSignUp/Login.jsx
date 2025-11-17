@@ -3,6 +3,7 @@ import Buttons from "@components/Buttons/Buttons";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Authen() {
   const formik = useFormik({
@@ -53,11 +54,13 @@ function Authen() {
 
   const navigate = useNavigate();
 
+  const [isLogin, setIsLogin] = useState(true);
+
   console.log(formik.errors);
 
   return (
     <div className="ls-container">
-      <p className="text-center text-xs">Login</p>
+      <p className="text-center text-xs">{isLogin ? "Login" : "Sign Up"}</p>
       <form onSubmit={formik.handleSubmit}>
         <InputField
           id="username"
@@ -99,9 +102,38 @@ function Authen() {
           </div>
         )}
 
-        <Buttons text="Login" type="submit" />
+        <div className="flex justify-between">
+          {isLogin ? (
+            <div>
+              Dont have an Account?{" "}
+              <span
+                className="text-[var(--ls-primary)] cursor-pointer underline ml-1"
+                onClick={() => setIsLogin(false)}
+              >
+                Sign Up
+              </span>
+            </div>
+          ) : (
+            <div>
+              already have an Account?{" "}
+              <span
+                className="text-[var(--ls-primary)] cursor-pointer underline ml-1"
+                onClick={() => setIsLogin(true)}
+              >
+                Sign Up
+              </span>
+            </div>
+          )}
 
-        <Buttons text="Back" onClick={() => navigate(-1)} />
+          <div>
+            <Buttons text={isLogin ? "Login" : "Sign Up"} type="submit" />
+            <Buttons
+              text="Back"
+              onClick={() => navigate(-1)}
+              variant="return"
+            />
+          </div>
+        </div>
       </form>
     </div>
   );
