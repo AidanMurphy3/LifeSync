@@ -1,6 +1,5 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./Nav.css";
 
 function Nav() {
   const location = useLocation();
@@ -8,25 +7,42 @@ function Nav() {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <header className="bg-[var(--ls-surface)] border-b border-[var(--ls-border)] shadow-sm h-[60px] flex items-center">
-      <div className="max-w-[1120px] h-full w-full mx-auto px-4 flex items-center justify-between">
+    <header className="bg-white border-b border-gray-200 shadow-sm h-[60px] flex items-center">
+      <div className="max-w-[1120px] w-full mx-auto px-4 flex items-center justify-between">
+        
         {/* LOGO */}
-        <div className="font-extrabold text-[36px] tracking-wide text-[var(--ls-text-muted)]">
-          Life<span className="text-[var(--ls-text-muted)]">Sync</span>
+        <div className="font-extrabold text-2xl lg:text-3xl tracking-wide text-blue-600">
+          Life<span className="text-blue-800">Sync</span>
         </div>
 
-        {/* NAV */}
-        <nav className="flex justify-between w-[320px] text-[0.95rem]">
-          <Link to="/" className="nav-link">
+        {/* NAVIGATION LINKS */}
+        <nav className="flex space-x-6 text-gray-700 text-sm lg:text-base">
+          <Link
+            to="/home"
+            className={`px-2 py-1 rounded hover:bg-blue-100 transition ${
+              isActive("/home") ? "font-semibold text-blue-700 bg-blue-50" : ""
+            }`}
+          >
             Home
           </Link>
-          <Link to="/group-management" className="nav-link">
+          <Link
+            to="/group-management"
+            className={`px-2 py-1 rounded hover:bg-blue-100 transition ${
+              isActive("/group-management") ? "font-semibold text-blue-700 bg-blue-50" : ""
+            }`}
+          >
             Group Management
           </Link>
-          <Link to="/task-habits" className="nav-link">
+          <Link
+            to="/task-habits"
+            className={`px-2 py-1 rounded hover:bg-blue-100 transition ${
+              isActive("/task-habits") ? "font-semibold text-blue-700 bg-blue-50" : ""
+            }`}
+          >
             Task & Habits
           </Link>
         </nav>
+
       </div>
     </header>
   );
