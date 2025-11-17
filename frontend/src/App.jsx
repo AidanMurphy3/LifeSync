@@ -1,6 +1,6 @@
 // src/App.jsx
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import "./App.css";
 import "@styles/main.css";
@@ -8,6 +8,7 @@ import "@styles/main.css";
 // layout components
 import Nav from "@components/Nav/nav.jsx";
 import Footer from "@components/Footer/Footer.jsx";
+import FriendsColumn from "@components/Friends/Friend.jsx";
 
 // high-level pages
 import HomePage from "@pages/HomePage/homePage.jsx";
@@ -33,37 +34,42 @@ import ViewMemberTasks from "./pages/TaskHabit/ViewMemberTasks.jsx";
 import ViewerTaskStatus from "./pages/TaskHabit/ViewerTaskStatus.jsx";
 
 function App() {
+  const location = useLocation();
   return (
     <div className="min-h-screen flex flex-col">
       <Nav />
 
-      <main className="flex-1">
-        <Routes>
-          {/* home */}
-          <Route path="/" element={<HomePage />} />
+      <div className="flex flex-1">
+        <main className="flex-1 ">
+          <Routes>
+            {/* home */}
+            <Route path="/" element={<HomePage />} />
 
-          <Route path="/Authentication" element={<Authen />} />
+            <Route path="/Authentication" element={<Authen />} />
 
-          {/* group management */}
-          <Route path="/group-management" element={<GroupManagementPage />} />
-          <Route path="/group/create" element={<CreateGroup />} />
-          <Route path="/group/add-members" element={<AddMembers />} />
-          <Route path="/group/edit" element={<EditGroup />} />
-          <Route path="/group/delete" element={<DeleteGroup />} />
-          <Route path="/group/assign-roles" element={<AssignRoles />} />
-          <Route path="/group/leave" element={<LeaveGroup />} />
+            {/* group management */}
+            <Route path="/group-management" element={<GroupManagementPage />} />
+            <Route path="/group/create" element={<CreateGroup />} />
+            <Route path="/group/add-members" element={<AddMembers />} />
+            <Route path="/group/edit" element={<EditGroup />} />
+            <Route path="/group/delete" element={<DeleteGroup />} />
+            <Route path="/group/assign-roles" element={<AssignRoles />} />
+            <Route path="/group/leave" element={<LeaveGroup />} />
 
-          {/* tasks & habits */}
-          <Route path="/task-habits" element={<TaskHabitPage />} />
-          <Route path="/task/create" element={<CreateTaskHabit />} />
-          <Route path="/task/assign" element={<AssignTask />} />
-          <Route path="/task/edit" element={<EditTaskHabit />} />
-          <Route path="/task/approve" element={<ApproveTaskHabit />} />
-          <Route path="/task/member-add" element={<MemberAddTaskHabit />} />
-          <Route path="/task/member-view" element={<ViewMemberTasks />} />
-          <Route path="/task/viewer" element={<ViewerTaskStatus />} />
-        </Routes>
-      </main>
+            {/* tasks & habits */}
+            <Route path="/task-habits" element={<TaskHabitPage />} />
+            <Route path="/task/create" element={<CreateTaskHabit />} />
+            <Route path="/task/assign" element={<AssignTask />} />
+            <Route path="/task/edit" element={<EditTaskHabit />} />
+            <Route path="/task/approve" element={<ApproveTaskHabit />} />
+            <Route path="/task/member-add" element={<MemberAddTaskHabit />} />
+            <Route path="/task/member-view" element={<ViewMemberTasks />} />
+            <Route path="/task/viewer" element={<ViewerTaskStatus />} />
+          </Routes>
+        </main>
+
+        {location.pathname !== "/Authentication" && <FriendsColumn />}
+      </div>
 
       <Footer />
     </div>

@@ -15,15 +15,21 @@
     box-shadow var(--ls-transition);
 }
 
+.ls-btn-secondary {
+  background: white;
+  color: #24a95e;
+  box-shadow: 0 12px 30px white;
+}
+
+.ls-btn-secondary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 16px 40px white;
+}
+
 .ls-btn-primary {
   background: var(--ls-primary);
   color: #ffffff;
   box-shadow: 0 12px 30px #24a95e;
-}
-
-.ls-btn-primary:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 16px 40px #24a95e;
 }
 
 .ls-btn-outline {

@@ -120,7 +120,7 @@ function Authen() {
                 className="text-[var(--ls-primary)] cursor-pointer underline ml-1"
                 onClick={() => setIsLogin(true)}
               >
-                Sign Up
+                Login
               </span>
             </div>
           )}

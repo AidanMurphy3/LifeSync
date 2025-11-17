@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Buttons from "../Buttons/Buttons";
 
 function Card() {
   return (
@@ -18,7 +19,7 @@ function Card() {
         </div>
       </div>
       <Link to="/api/groups" className="mt-auto self-end">
-        <button className="ls-btn ls-btn-primary">View Group</button>
+        <Buttons text="View Group" variant="secondary" />
       </Link>
     </div>
   );
