@@ -1,5 +1,5 @@
 const TaskService = require("../services/taskService");
-const Task = require("../models/Task");
+const Task = require("../models/taskModel.js");
 
 // Create a new task
 const createTask = async (req, res) => {
@@ -44,6 +44,41 @@ const updateTask = async (req, res) => {
     res.status(200).json(updatedTask);
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+};
+
+
+const assignTask = async (req, res) => {
+  try {
+    const { taskId, userId } = req.body;
+
+    // Validate input
+    if (!mongoose.Types.ObjectId.isValid(taskId)) {
+      return res.status(400).json({ message: 'Invalid taskId' });
+    }
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ message: 'Invalid userId' });
+    }
+
+    // Find the task
+    const task = await Task.findById(taskId);
+    if (!task) {
+      return res.status(404).json({ message: 'Task not found' });
+    }
+
+    // Assign the task
+    task.assignedTo = userId;
+
+    // Optional: Reset status or progress when reassigned
+    task.status = 'Pending';
+    task.progress = 0;
+
+    await task.save();
+
+    return res.status(200).json({ message: 'Task assigned successfully', task });
+  } catch (error) {
+    console.error('Error assigning task:', error);
+    return res.status(500).json({ message: 'Server error' });
   }
 };
 
@@ -163,5 +198,5 @@ module.exports = {
   deleteTask,
   markComplete,
   approveTask,
+  assignTask
 };
-module.exports = {getAllTasks, getTasksByGroup, getTasksByAssignedUser, getTasksByGroupAndAssignedUser};
