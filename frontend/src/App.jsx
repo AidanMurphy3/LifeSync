@@ -1,18 +1,15 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import './index.css'
-import DeleteConfirmation from './components/DeleteButton.jsx'
+import "./App.css";
+import "./index.css";
+import DeleteConfirmation from "./components/DeleteButton.jsx";
+import CreateTaskForm from "./components/CreateTaskForm.jsx";
 
 function App() {
-    return (
-
- <DeleteConfirmation />
-
-    
-    )
+  return (
+    <div className="min-h-screen bg-gray-100 p-4 flex justify-center items-start">
+      {/* <DeleteConfirmation /> */}
+      <CreateTaskForm />
+    </div>
+  );
 }
 
-
-export default App
+export default App;
