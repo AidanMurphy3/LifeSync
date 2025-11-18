@@ -12,55 +12,53 @@ function CreateGroup() {
 
   // Load logged-in user ID from localStorage
   useEffect(() => {
-    const userId = "691bc768542a7c840bcb7ed4";
-    if (userId) {
-      setOwner(userId);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user._id) {
+      setOwner(user._id);
     }
   }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-  const authToken = localStorage.getItem("authToken");
-  const user = JSON.parse(localStorage.getItem("user"));
-  const userID = "691bc768542a7c840bcb7ed4"
+    const authToken = localStorage.getItem("authToken");
 
-  if (!userID) {
-    console.error("Missing userID. Cannot create group.");
-    return;
-  }
-
-  const newGroup = {
-    name,
-    description,
-    groupType,
-    privacySetting,
-    owner: userID,
-  };
-
-  console.log("Sending to backend:", newGroup);
-
-  try {
-    const res = await fetch("https://lifesync-ufkl.onrender.com/api/groups", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${authToken}`,
-      },
-      body: JSON.stringify(newGroup),
-    });
-
-    const data = await res.json();
-    console.log("Backend returned:", data);
-
-    if (!res.ok) {
-      throw new Error(data.message || "Failed to create group");
+    if (!owner) {
+      console.error("Missing userID. Cannot create group.");
+      return;
     }
 
-    navigate("/group-management");
-  } catch (error) {
-    console.error("Error creating group:", error);
-  }
+    const newGroup = {
+      name,
+      description,
+      groupType,
+      privacySetting,
+      owner,
+    };
+
+    console.log("Sending to backend:", newGroup);
+
+    try {
+      const res = await fetch("https://lifesync-ufkl.onrender.com/api/groups", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        body: JSON.stringify(newGroup),
+      });
+
+      const data = await res.json();
+      console.log("Backend returned:", data);
+
+      if (!res.ok) {
+        throw new Error(data.message || "Failed to create group");
+      }
+
+      navigate("/group-management");
+    } catch (error) {
+      console.error("Error creating group:", error);
+    }
   };
 
   return (
@@ -69,7 +67,6 @@ function CreateGroup() {
         <h1>Create Group</h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
-
           {/* Group Name */}
           <div>
             <label className="block mb-2 font-medium text-gray-700">
@@ -105,7 +102,6 @@ function CreateGroup() {
             <label className="block mb-2 font-medium text-gray-700">
               Category
             </label>
-
             <select
               value={groupType}
               onChange={(e) => setGroupType(e.target.value)}
@@ -149,11 +145,10 @@ function CreateGroup() {
               Cancel
             </button>
 
-            <button type="submit" className="ls-btn ls-btn-primary">
+            <button type="submit" className="ls-btn ls-btn-primary" disabled={!owner}>
               Save
             </button>
           </div>
-
         </form>
       </div>
     </section>
