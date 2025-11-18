@@ -10,11 +10,17 @@ function Authen() {
   const navigate = useNavigate();
 
   const formik = useFormik({
-    initialValues: { name: "", email: "", password: "" },
+    initialValues: { username: "", email: "", password: "" },
     validationSchema: Yup.object({
-      name: isLogin ? Yup.string() : Yup.string().required("Name is required"),
-      email: Yup.string().email("Invalid email address").required("Email is required"),
-      password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+      username: isLogin
+        ? Yup.string()
+        : Yup.string().required("Username is required"),
+      email: Yup.string()
+        .email("Invalid email address")
+        .required("Email is required"),
+      password: Yup.string()
+        .min(6, "Password must be at least 6 characters")
+        .required("Password is required"),
     }),
     onSubmit: async (values) => {
       try {
@@ -24,7 +30,11 @@ function Authen() {
 
         const payload = isLogin
           ? { email: values.email, password: values.password }
-          : { name: values.name, email: values.email, password: values.password };
+          : {
+              username: values.username,
+              email: values.email,
+              password: values.password,
+            };
 
         const response = await fetch(url, {
           method: "POST",
@@ -74,15 +84,17 @@ function Authen() {
         {!isLogin && (
           <>
             <InputField
-              id="name"
-              label="Name *"
+              id="username"
+              label="Username *"
               type="text"
               onBlur={formik.handleBlur}
               onChange={formik.handleChange}
-              value={formik.values.name}
+              value={formik.values.username}
             />
-            {formik.errors.name && formik.touched.name && (
-              <div className="text-[var(--ls-accent-red)]">{formik.errors.name}</div>
+            {formik.errors.username && formik.touched.username && (
+              <div className="text-[var(--ls-accent-red)]">
+                {formik.errors.username}
+              </div>
             )}
           </>
         )}
@@ -96,7 +108,9 @@ function Authen() {
           value={formik.values.email}
         />
         {formik.errors.email && formik.touched.email && (
-          <div className="text-[var(--ls-accent-red)]">{formik.errors.email}</div>
+          <div className="text-[var(--ls-accent-red)]">
+            {formik.errors.email}
+          </div>
         )}
 
         <InputField
@@ -108,7 +122,9 @@ function Authen() {
           value={formik.values.password}
         />
         {formik.errors.password && formik.touched.password && (
-          <div className="text-[var(--ls-accent-red)]">{formik.errors.password}</div>
+          <div className="text-[var(--ls-accent-red)]">
+            {formik.errors.password}
+          </div>
         )}
 
         <div className="flex justify-between items-center mt-4">
@@ -138,7 +154,11 @@ function Authen() {
 
           <div className="flex gap-2">
             <Buttons text={isLogin ? "Login" : "Sign Up"} type="submit" />
-            <Buttons text="Back" onClick={() => navigate(-1)} variant="return" />
+            <Buttons
+              text="Back"
+              onClick={() => navigate(-1)}
+              variant="return"
+            />
           </div>
         </div>
       </form>

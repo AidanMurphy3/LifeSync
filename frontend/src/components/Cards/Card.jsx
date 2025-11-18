@@ -1,24 +1,29 @@
 import { Link } from "react-router-dom";
 import Buttons from "../Buttons/Buttons";
+import RoundDashboard from "../Dashboard/Dashboard";
 
-function Card() {
+function Card({ id, groupName, groupType, tasks }) {
   return (
-    <div className="bg-[var(--ls-primary)] rounded-[20px] p-6 shadow w-full h-[400px] text-[var(--ls-text-muted)] flex flex-col">
-      <span>Group 1</span>
-      <div className="grid grid-cols-[2fr_1fr] gap-4">
+    <div className="bg-[var(--ls-primary)] rounded-[20px] p-6 shadow w-full  text-[var(--ls-text-muted)] flex flex-col">
+      <div className="flex justify-between">
+        <p>{groupName}</p>
+        <p>Type: {groupType}</p>
+      </div>
+      <div className="grid grid-cols-[2fr_1fr]">
         {/* dashboards */}
-        <div>Dashboard</div>
+        <RoundDashboard tasks={tasks ?? []} />
+
         {/* tasks/habits */}
         <div>
           <span>Tasks/Habits</span>
           <ul>
-            <li>task 1</li>
-            <li>task 2</li>
-            <li>task 3</li>
+            {(tasks ?? []).slice(0, 8).map((task, id) => {
+              return <li key={id}>{task}</li>;
+            })}
           </ul>
         </div>
       </div>
-      <Link to="/api/groups" className="mt-auto self-end">
+      <Link to="/api/groups" className="self-end">
         <Buttons text="View Group" variant="secondary" />
       </Link>
     </div>

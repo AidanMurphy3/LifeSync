@@ -8,13 +8,13 @@ function Nav() {
   const location = useLocation();
   const [user, setUser] = useState(null);
 
-  // Check if user is logged in
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) {
       try {
         const parsedUser = JSON.parse(storedUser);
         setUser(parsedUser);
+        console.log(parsedUser);
       } catch (err) {
         console.error("Error parsing user from localStorage", err);
       }
@@ -37,10 +37,15 @@ function Nav() {
 
           {user ? (
             // If user is logged in
-            <span className="nav-link flex items-center gap-1">Hi, {user.name}</span>
+            <span className="nav-link flex item-center gap-10 cursor-pointer">
+              {user.name} <CgProfile className="w-[24px] h-[24px]" />
+            </span>
           ) : (
             // If not logged in, show Sign Up link
-            <Link to="/Authentication" className="nav-link flex items-center gap-1">
+            <Link
+              to="/Authentication"
+              className="nav-link flex items-center gap-1"
+            >
               Sign Up <CgProfile />
             </Link>
           )}

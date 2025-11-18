@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Card from "@components/Cards/Card";
+import Buttons from "../../components/Buttons/Buttons";
 
 function HomePage() {
   const [groups, setGroups] = useState([]);
@@ -10,49 +11,12 @@ function HomePage() {
       .then((res) => res.json())
       .then((data) => {
         console.log("Fetched groups:", data);
-        setGroups(data);
+        setGroups(data.data);
       })
       .catch((err) => console.error("Error fetching:", err));
   }, []);
 
-  const handleNewGroupChange = (e) => {
-    const { name, value } = e.target;
-    setNewGroup((prev) => ({
-      ...prev,
-      [name]:
-        name === "members" || name === "tasks" || name === "completion"
-          ? Number(value)
-          : value,
-    }));
-  };
-
-  const handleAddGroup = (e) => {
-    e.preventDefault();
-    if (!newGroup.name.trim()) return;
-
-    const nextId = groups.length ? Math.max(...groups.map((g) => g.id)) + 1 : 1;
-
-    setGroups((prev) => [
-      ...prev,
-      {
-        ...newGroup,
-        id: nextId,
-      },
-    ]);
-
-    setNewGroup({
-      name: "",
-      role: "Owner",
-      description: "",
-      members: 1,
-      tasks: 0,
-      completion: 0,
-    });
-  };
-
-  const handleDeleteGroup = (id) => {
-    setGroups((prev) => prev.filter((g) => g.id !== id));
-  };
+  console.log(groups);
 
   return (
     <>
@@ -74,9 +38,11 @@ function HomePage() {
               <Link className="ls-btn ls-btn-primary" to="/group/create">
                 + Create Group
               </Link>
-              <button className="ls-btn ls-btn-ghost">
-                Join an existing group
-              </button>
+              <Buttons
+                text="Join an existing group"
+                type="button"
+                variant="secondary"
+              />
             </div>
           </div>
 
@@ -111,12 +77,19 @@ function HomePage() {
           <div className="flex items-center justify-between mb-4">
             <h2>My Groups</h2>
             <Link to="/group/create">
-              <button className="ls-btn ls-btn-primary">+ Add Group</button>
+              <button className="ls-btn ls-btn-primary">+ Create Group</button>
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-[30px] p-10">
-            <Card />
-            <Card />
+            {groups.map((group) => {
+              return (
+                <Card
+                  id={group.id}
+                  groupName={group.name}
+                  groupType={group.groupType}
+                />
+              );
+            })}
           </div>
         </div>
       </section>

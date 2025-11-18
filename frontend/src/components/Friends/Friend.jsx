@@ -2,7 +2,7 @@ import Buttons from "../Buttons/Buttons";
 
 function FriendsColumn() {
   return (
-    <div className="w-[250px] h-screen sticky top-0 bg-[var(--ls-primary)] text-white p-4 border-l border-black">
+    <div className="w-[250px] sticky top-0 bg-[var(--ls-primary)] text-white p-4 border-l border-black">
       <div className="flex justify-between">
         <h2 className="text-[var(--ls-text-muted)] font-semibold mb-4">
           Friends
