@@ -12,7 +12,7 @@ function CreateGroup() {
 
   // Load logged-in user ID from localStorage
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
+    const userId = "691bc768542a7c840bcb7ed4";
     if (userId) {
       setOwner(userId);
     }
@@ -23,7 +23,7 @@ function CreateGroup() {
 
   const authToken = localStorage.getItem("authToken");
   const user = JSON.parse(localStorage.getItem("user"));
-  const userID = user?._id;
+  const userID = "691bc768542a7c840bcb7ed4"
 
   if (!userID) {
     console.error("Missing userID. Cannot create group.");
