@@ -6,6 +6,7 @@ const userRoutes = require("./routes/userRoutes.js");
 const groupRoutes = require("./routes/groupRoutes.js");
 const groupMembershipRoutes = require("./routes/groupMembershipRoutes.js");
 const taskRoutes = require("./routes/taskRoutes.js");
+const authRoutes = require("./routes/authRoute.js")
 
 dotenv.config();
 connectDB();
@@ -26,6 +27,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ROUTES
+app.use('/api/auth', authRoutes);
+
 app.use("/api/users", userRoutes);
 app.use("/api/groups", groupRoutes);
 app.use("/api/groupMemberships", groupMembershipRoutes);

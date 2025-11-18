@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const User = require('../models/User'); // Adjust path as needed
-// Note: You would typically require bcrypt here for password hashing/comparison.
+const bcrypt = require('bcrypt');
 
 // Helper function for consistent error handling and Mongoose ID check
 const handleControllerError = (res, error, defaultMessage, status = 500) => {
@@ -23,21 +23,43 @@ const handleControllerError = (res, error, defaultMessage, status = 500) => {
 // ----------------------------------------------------------------------
 
 // POST /users - Add user (C) (Registration)
+
 const addUser = async (req, res) => {
-    // NOTE: In a real app, you would hash req.body.password here before creating the user.
     try {
-        const newUser = new User(req.body);
+        const { name, email, password } = req.body;
+
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: 'Name, email, and password are required.' });
+        }
+
+        // Hash password
+        const passwordHash = await bcrypt.hash(password, 12);
+
+        // Create user
+        const newUser = new User({
+            name,
+            email,
+            passwordHash,
+            roleType: 'Viewer', // enforce default role
+        });
+
         await newUser.save();
-        
-        // Exclude sensitive fields from the response
+
+        // Prepare response
         const userResponse = newUser.toObject();
-        delete userResponse.passwordHash; 
-        
+        delete userResponse.passwordHash;
+
         res.status(201).json({ message: 'User created successfully.', data: userResponse });
+
     } catch (error) {
-        handleControllerError(res, error, 'Failed to register user.', 400);
+        if (error.code === 11000) { // duplicate key
+            return res.status(400).json({ message: 'Email already exists.' });
+        }
+        console.error(error);
+        res.status(500).json({ message: 'Failed to register user.', error: error.message });
     }
 };
+
 
 // GET /users - Get all users (R - All)
 const getUsers = async (req, res) => {

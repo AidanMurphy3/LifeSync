@@ -24,7 +24,7 @@ router.get("/name/:name", getUser);
 // --- CUD Operations ---
 
 // ADD user (C - Create)
-router.post("/", addUser);
+router.post("/sign-up", addUser);
 
 // UPDATE user (General update, using PATCH for partial updates)
 router.patch("/:id", updateUser); // Assumes you have an updateUser function
