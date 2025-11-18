@@ -32,15 +32,27 @@ function Authen() {
           body: JSON.stringify(payload),
         });
 
-        const data = await response.json();
+        // Safely parse JSON
+        const text = await response.text();
+        let data;
+        try {
+          data = JSON.parse(text);
+        } catch {
+          console.error("Server returned non-JSON response:", text);
+          alert("Unexpected server response. Check backend URL.");
+          return;
+        }
+
+        // Store token if backend returns one
+        if (data.token) localStorage.setItem("token", data.token);
 
         if (!response.ok) {
           alert(data.message || "Request failed");
           return;
         }
 
-        // Store token if backend returns one
-        if (data.token) localStorage.setItem("token", data.token);
+        if (data.token) localStorage.setItem("authToken", data.token);
+        if (data.data) localStorage.setItem("user", JSON.stringify(data.data));
 
         navigate("/"); // redirect to homepage
       } catch (err) {
