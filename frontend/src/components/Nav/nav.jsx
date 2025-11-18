@@ -6,15 +6,18 @@ import { useEffect, useState } from "react";
 
 function Nav() {
   const location = useLocation();
+  const [user, setUser] = useState(null);
 
-  const isActive = (path) => location.pathname === path;
-
-  const [username, setUsername] = useState(null);
-
+  // Check if user is logged in
   useEffect(() => {
-    const storedUser = localStorage.getItem("username");
+    const storedUser = localStorage.getItem("user");
     if (storedUser) {
-      setUsername(storedUser);
+      try {
+        const parsedUser = JSON.parse(storedUser);
+        setUser(parsedUser);
+      } catch (err) {
+        console.error("Error parsing user from localStorage", err);
+      }
     }
   }, []);
 
@@ -27,22 +30,24 @@ function Nav() {
         </div>
 
         {/* NAV */}
-        <nav className="flex justify-between w-[320px] text-[0.95rem]">
+        <nav className="flex justify-between w-[320px] text-[0.95rem] items-center gap-4">
           <Link to="/" className="nav-link">
             Home
           </Link>
-          {username ? (
-            <span>Hi, {username}</span>
+
+          {user ? (
+            // If user is logged in
+            <span className="nav-link flex items-center gap-1">Hi, {user.name}</span>
           ) : (
-            <Link to="/Authentication" className="nav-link">
+            // If not logged in, show Sign Up link
+            <Link to="/Authentication" className="nav-link flex items-center gap-1">
               Sign Up <CgProfile />
             </Link>
           )}
+
           <FaBell
             className="h-[24px] w-[24px] text-[var(--ls-text-muted)] cursor-pointer"
-            onClick={() => {
-              console.log("bell");
-            }}
+            onClick={() => console.log("bell")}
           />
         </nav>
       </div>
