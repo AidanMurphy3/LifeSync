@@ -1,18 +1,20 @@
 // src/App.jsx
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import "./App.css";
+import "@styles/main.css";
 
 // layout components
 import Nav from "@components/Nav/nav.jsx";
 import Footer from "@components/Footer/Footer.jsx";
+import FriendsColumn from "@components/Friends/Friend.jsx";
 
 // high-level pages
-import LoginPage from "./pages/Login/loginPage.jsx";
-import HomePage from "./pages/HomePage/homePage.jsx";
-import GroupManagementPage from "./pages/GroupManagementPage.jsx";
-import TaskHabitPage from "./pages/TaskHabitPage.jsx";
+import HomePage from "@pages/HomePage/homePage.jsx";
+import GroupManagementPage from "@pages/GroupManagementPage.jsx";
+import TaskHabitPage from "@pages/TaskHabitPage.jsx";
+import Authen from "@pages/LoginSignUp/Login.jsx";
 
 // group management story pages
 import CreateGroup from "./pages/GroupManagement/CreateGroup.jsx";
@@ -32,20 +34,18 @@ import ViewMemberTasks from "./pages/TaskHabit/ViewMemberTasks.jsx";
 import ViewerTaskStatus from "./pages/TaskHabit/ViewerTaskStatus.jsx";
 
 function App() {
+  const location = useLocation();
   return (
-    <div className="min-h-screen flex flex-col bg-gray-100 text-gray-900">
-
-      {/* NAVBAR */}
+    <div className="min-h-screen flex flex-col">
       <Nav />
-      
-      {/* MAIN CONTENT */}
-      <main className="flex-1 px-4 lg:px-8 py-6">
-        <div className="max-w-7xl mx-auto bg-white p-6 rounded-xl shadow-sm">
 
+      <div className="flex flex-1">
+        <main className="flex-1 ">
           <Routes>
             {/* home */}
-            <Route path="/" element={<LoginPage/>} />
-            <Route path="/home" element={<HomePage/>} />
+            <Route path="/" element={<HomePage />} />
+
+            <Route path="/Authentication" element={<Authen />} />
 
             {/* group management */}
             <Route path="/group-management" element={<GroupManagementPage />} />
@@ -66,15 +66,14 @@ function App() {
             <Route path="/task/member-view" element={<ViewMemberTasks />} />
             <Route path="/task/viewer" element={<ViewerTaskStatus />} />
           </Routes>
+        </main>
 
-        </div>
-      </main>
+        {location.pathname !== "/Authentication" && <FriendsColumn />}
+      </div>
 
-      {/* FOOTER */}
       <Footer />
     </div>
   );
 }
 
 export default App;
-

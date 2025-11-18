@@ -1,1 +1,348 @@
-@import "tailwindcss";
+/* =======================================================
+   HERO / TOP SECTION
+   ======================================================= */
+
+.ls-hero {
+  padding: 2.8rem 0 1.8rem;
+}
+
+.ls-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2.4fr);
+  gap: 2.2rem;
+  align-items: center;
+}
+
+.ls-hero-text h1 {
+  font-size: clamp(2.4rem, 3.4vw, 2.9rem); /* Display 1-ish */
+  line-height: 1.2;
+  margin: 0 0 0.8rem;
+}
+
+.ls-hero-text p {
+  color: var(--ls-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.3rem;
+  font-size: 0.96rem;
+}
+
+.ls-hero-actions {
+  display: flex;
+  gap: 0.7rem;
+  margin-bottom: 0.9rem;
+}
+
+.ls-hero-sub {
+  color: var(--ls-text-muted);
+  font-size: 0.9rem;
+}
+
+/* Hero "Today at a glance" card */
+.ls-hero-card {
+  background: var(--ls-surface);
+  border-radius: var(--ls-radius-lg);
+  padding: 1.4rem 1.5rem;
+  box-shadow: var(--ls-shadow-soft);
+  border: 1px solid var(--ls-border);
+}
+
+.ls-hero-card h2 {
+  margin: 0 0 0.9rem;
+  font-size: 1.2rem;
+}
+
+.ls-stats {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-radius: 12px;
+  background: var(--ls-surface-soft);
+  border: 1px solid var(--ls-border);
+  overflow: hidden;
+}
+
+.ls-stats li {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.9rem;
+}
+
+.ls-stats li + li {
+  border-top: 1px solid var(--ls-border);
+}
+
+.ls-stat-label {
+  color: black;
+}
+
+.ls-stat-value {
+  font-weight: 600;
+}
+
+.ls-small {
+  margin-top: 0.7rem;
+  font-size: 0.78rem;
+  color: var(--ls-text-muted);
+}
+
+/* =======================================================
+   SECTIONS / HEADINGS
+   ======================================================= */
+
+.ls-section {
+  padding: 2.3rem 0;
+}
+
+.ls-section-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.35rem;
+}
+
+.ls-section-header h2 {
+  margin: 0;
+  font-size: 1.35rem; /* Heading 2 */
+}
+
+.ls-section-subtitle {
+  margin: 0;
+  color: var(--ls-text-muted);
+  font-size: 0.9rem;
+}
+
+/* =======================================================
+   MY GROUPS – FORM + CARDS
+   ======================================================= */
+
+.ls-group-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1rem 0 1.25rem;
+  padding: 1.1rem 1.15rem;
+  border-radius: var(--ls-radius-lg);
+  background: var(--ls-surface);
+  border: 1px solid var(--ls-border);
+  box-shadow: var(--ls-shadow-card);
+}
+
+.ls-group-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: flex-end;
+}
+
+.ls-group-form input,
+.ls-group-form select,
+.ls-group-form textarea {
+  border-radius: 999px;
+  border: 1px solid var(--ls-border);
+  background: var(--ls-surface-soft);
+  color: var(--ls-text);
+  padding: 0.5rem 0.8rem;
+  font-size: 0.86rem;
+  outline: none;
+}
+
+.ls-group-form textarea {
+  border-radius: var(--ls-radius-md);
+  width: 100%;
+  resize: vertical;
+}
+
+.ls-group-form input:focus,
+.ls-group-form select:focus,
+.ls-group-form textarea:focus {
+  border-color: var(--ls-primary);
+  box-shadow: 0 0 0 1px rgba(25, 113, 216, 0.4);
+}
+
+/* labels stack in the second row (Members / Tasks / Completion) */
+.ls-group-form-row label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: var(--ls-text-muted);
+}
+
+/* first row – grow name, fixed select */
+.ls-group-form-row:first-of-type input[name="name"] {
+  flex: 1 1 220px;
+}
+
+.ls-group-form-row:first-of-type select[name="role"] {
+  min-width: 120px;
+}
+
+/* groups grid */
+.ls-groups-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.1rem;
+  margin-top: 0.4rem;
+}
+
+.ls-group-card {
+  background: var(--ls-surface);
+  border-radius: var(--ls-radius-lg);
+  padding: 1.05rem 1.15rem;
+  border: 1px solid var(--ls-border);
+  box-shadow: var(--ls-shadow-card);
+}
+
+.ls-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.4rem;
+}
+
+.ls-group-header h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.ls-badge {
+  font-size: 0.72rem;
+  padding: 0.1rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--ls-primary);
+  color: var(--ls-primary);
+  background: rgba(25, 113, 216, 0.08);
+}
+
+.ls-badge-secondary {
+  border-color: var(--ls-accent-green);
+  color: var(--ls-accent-green);
+  background: rgba(33, 160, 93, 0.08);
+}
+
+.ls-badge-viewer {
+  border-color: var(--ls-secondary);
+  color: var(--ls-secondary);
+  background: rgba(148, 163, 184, 0.16);
+}
+
+.ls-group-desc {
+  margin: 0.3rem 0 0.7rem;
+  font-size: 0.86rem;
+  color: var(--ls-text-muted);
+}
+
+.ls-group-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin: 0 0 0.8rem;
+  font-size: 0.78rem;
+}
+
+.ls-group-meta div {
+  flex: 1;
+}
+
+.ls-group-meta dt {
+  color: var(--ls-text-muted);
+}
+
+.ls-group-meta dd {
+  margin: 0.1rem 0 0;
+  font-weight: 600;
+}
+
+.ls-group-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+/* =======================================================
+   QUICK ACTIONS + STORY GROUP CARDS (bottom)
+   ======================================================= */
+
+.ls-section-alt {
+  background: transparent;
+}
+
+.ls-quick-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.ls-quick-card {
+  background: var(--ls-surface);
+  border-radius: var(--ls-radius-md);
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--ls-border);
+  box-shadow: var(--ls-shadow-card);
+  font-size: 0.9rem;
+}
+
+.ls-quick-card h3 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+.ls-quick-card p {
+  margin: 0 0 0.7rem;
+  color: var(--ls-text-muted);
+  font-size: 0.86rem;
+}
+
+.ls-quick-link {
+  font-size: 0.86rem;
+  color: var(--ls-primary);
+  text-decoration: none;
+}
+
+.ls-quick-link:hover {
+  text-decoration: underline;
+}
+
+/* story groups grid */
+.ls-story-group-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.1rem;
+}
+
+.ls-story-group-card {
+  background: var(--ls-surface);
+  border-radius: var(--ls-radius-md);
+  padding: 1rem 1.05rem;
+  border: 1px solid var(--ls-border);
+  box-shadow: var(--ls-shadow-card);
+}
+
+.ls-story-group-header h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+}
+
+.ls-story-group-desc {
+  margin: 0 0 0.7rem;
+  font-size: 0.86rem;
+  color: var(--ls-text-muted);
+}
+
+.ls-story-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.7rem;
+}
+
+.ls-story-chip {
+  font-size: 0.78rem;
+  padding: 0.16rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid var(--ls-border);
+  background: var(--ls-surface-soft);
+}
