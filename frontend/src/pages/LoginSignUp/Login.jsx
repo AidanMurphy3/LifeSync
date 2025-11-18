@@ -3,11 +3,13 @@ import Buttons from "@components/Buttons/Buttons";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import { sidebarContext } from "@context/Sidebar/SidebarProvider";
 
 function Authen() {
-  const [isLogin, setIsLogin] = useState(true);
+  const { login } = useContext(sidebarContext);
   const navigate = useNavigate();
+  const [isLogin, setIsLogin] = useState(true);
 
   const formik = useFormik({
     initialValues: { username: "", email: "", password: "" },
@@ -61,8 +63,7 @@ function Authen() {
           return;
         }
 
-        if (data.token) localStorage.setItem("authToken", data.token);
-        if (data.data) localStorage.setItem("user", JSON.stringify(data.data));
+        if (data.data) login(data.data);
 
         navigate("/"); // redirect to homepage
       } catch (err) {

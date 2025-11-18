@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useGroups } from "@context/GroupsContext/GroupProvider";
 
 function CreateGroup() {
   const [name, setName] = useState("");
@@ -7,6 +8,8 @@ function CreateGroup() {
   const [groupType, setGroupType] = useState("");
   const [privacySetting, setPrivacySetting] = useState("");
   const [owner, setOwner] = useState("");
+
+  const { fetchGroups } = useGroups();
 
   const navigate = useNavigate();
 
@@ -54,6 +57,8 @@ function CreateGroup() {
       if (!res.ok) {
         throw new Error(data.message || "Failed to create group");
       }
+
+      await fetchGroups();
 
       navigate("/group-management");
     } catch (error) {
@@ -145,7 +150,11 @@ function CreateGroup() {
               Cancel
             </button>
 
-            <button type="submit" className="ls-btn ls-btn-primary" disabled={!owner}>
+            <button
+              type="submit"
+              className="ls-btn ls-btn-primary"
+              disabled={!owner}
+            >
               Save
             </button>
           </div>

@@ -1,22 +1,15 @@
 import { useState, useEffect } from "react";
+import { useGroups } from "@context/GroupsContext/GroupProvider";
 import { Link } from "react-router-dom";
 import Card from "@components/Cards/Card";
-import Buttons from "../../components/Buttons/Buttons";
+import Buttons from "@components/Buttons/Buttons";
 
 function HomePage() {
-  const [groups, setGroups] = useState([]);
+  const { groups, loadingGroups, groupsError } = useGroups();
 
-  useEffect(() => {
-    fetch("https://lifesync-ufkl.onrender.com/api/groups")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Fetched groups:", data);
-        setGroups(data.data);
-      })
-      .catch((err) => console.error("Error fetching:", err));
-  }, []);
+  if (loadingGroups) return <p>Loading groups...</p>;
 
-  console.log(groups);
+  if (groupsError) return <p className="text-red-500">Failed to load groups</p>;
 
   return (
     <>
@@ -81,15 +74,19 @@ function HomePage() {
             </Link>
           </div>
           <div className="grid grid-cols-2 gap-[30px] p-10">
-            {groups.map((group) => {
-              return (
+            {groups.length === 0 ? (
+              <p className="text-center text-gray-400 col-span-2">
+                There is no group yet
+              </p>
+            ) : (
+              groups.map((group) => (
                 <Card
-                  id={group.id}
+                  id={group._id}
                   groupName={group.name}
                   groupType={group.groupType}
                 />
-              );
-            })}
+              ))
+            )}
           </div>
         </div>
       </section>

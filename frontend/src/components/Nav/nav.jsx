@@ -1,25 +1,14 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Nav.css";
 import { CgProfile } from "react-icons/cg";
+import { IoIosLogOut } from "react-icons/io";
+
 import { FaBell } from "react-icons/fa6";
-import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { sidebarContext } from "@context/Sidebar/SidebarProvider";
 
 function Nav() {
-  const location = useLocation();
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      try {
-        const parsedUser = JSON.parse(storedUser);
-        setUser(parsedUser);
-        console.log(parsedUser);
-      } catch (err) {
-        console.error("Error parsing user from localStorage", err);
-      }
-    }
-  }, []);
+  const { user, logout } = useContext(sidebarContext);
 
   return (
     <header className="bg-[var(--ls-surface)] border-b border-[var(--ls-border)] shadow-sm h-[60px] flex items-center">
@@ -37,8 +26,10 @@ function Nav() {
 
           {user ? (
             // If user is logged in
-            <span className="nav-link flex item-center gap-10 cursor-pointer">
-              {user.name} <CgProfile className="w-[24px] h-[24px]" />
+            <span className="nav-link cursor-pointer">
+              {user.name}
+              <CgProfile className="w-[24px] h-[24px]" />
+              <IoIosLogOut className="w-[24px] h-[24px]" onClick={logout} />
             </span>
           ) : (
             // If not logged in, show Sign Up link
