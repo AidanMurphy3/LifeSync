@@ -1,23 +1,51 @@
 const express = require("express");
-const { createTask, getTasks, markComplete } = require("../controllers/taskController");
-const {getAllTasks, getTasksByGroup, getTasksByAssignedUser, getTasksByGroupAndAssignedUser} = require("../controllers/taskController.js")
-
 const router = express.Router();
+const { 
+    createTask, 
+    getTasks, 
+    getTaskById,
+    updateTask,
+    deleteTask,
+    markComplete, 
+    approveTask, 
+    assignTask 
+} = require("../controllers/taskController"); 
 
-//GET all tasks route
-router.get("/", getAllTasks);
+// --- Core CRUD Operations ---
 
-//GET all tasks in a specified group route
-router.get("/group/:groupId", getTasksByGroup);
+// GET /api/tasks 
+// READ ALL tasks. Uses query parameters for filtering (e.g., ?groupId=...&assignedTo=...)
+router.get("/", getTasks); 
 
-//GET all tasks assigned to a specify user
-router.get("/user/:assignedTo", getTasksByAssignedUser);
-
-//GET all tasks assigned to a specify user and in a specify group
-router.get("/group/:groupId/user/:assignedTo", getTasksByGroupAndAssignedUser);
-
+// POST /api/tasks
+// CREATE new task
 router.post("/", createTask);
-router.get("/", getTasks);
+
+// GET /api/tasks/:id
+// READ ONE task by ID
+router.get("/:id", getTaskById); 
+
+// PATCH /api/tasks/:id
+// UPDATE task (General update)
+router.patch("/:id", updateTask); 
+// router.put("/:id", updateTask); // Use PATCH for partial updates, or PUT for full replacement
+
+// DELETE /api/tasks/:id
+// DELETE task
+router.delete("/:id", deleteTask); 
+
+// --- Utility/Workflow Operations ---
+
+// PATCH /api/tasks/:id/complete
+// Mark task as complete
 router.patch("/:id/complete", markComplete);
+
+// PATCH /api/tasks/:id/approve
+// Approve a task
+router.patch("/:id/approve", approveTask);
+
+// PATCH /api/tasks/:id/assign
+// Assign a task to a user. Assumes the user ID is in the request body.
+router.patch("/:id/assign", assignTask);
 
 module.exports = router;

@@ -6,38 +6,35 @@ const userRoutes = require("./routes/userRoutes.js");
 const groupRoutes = require("./routes/groupRoutes.js");
 const groupMembershipRoutes = require("./routes/groupMembershipRoutes.js");
 const taskRoutes = require("./routes/taskRoutes.js");
+const authRoutes = require("./routes/authRoute.js")
 
 dotenv.config();
-
 connectDB();
 
 const app = express();
 
+// CORS
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://cerulean-cuchufli-06478a.netlify.app",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
 
-app.options("*", cors());
-
 app.use(express.json());
-
-const PORT = process.env.PORT || 3000;
+app.use(express.urlencoded({ extended: true }));
 
 // ROUTES
-app.use("/api/users", userRoutes);
-app.use("/api/groups", groupRoutes);
-app.use("/api/tasks", tasksRoutes);
+app.use('/api/auth', authRoutes);
+
 app.use("/api/users", userRoutes);
 app.use("/api/groups", groupRoutes);
 app.use("/api/groupMemberships", groupMembershipRoutes);
 app.use("/api/tasks", taskRoutes);
 
+
+
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on PORT:${PORT}`));

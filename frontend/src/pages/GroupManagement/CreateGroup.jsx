@@ -1,47 +1,60 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function CreateGroup() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
   const [groupType, setGroupType] = useState("");
   const [privacySetting, setPrivacySetting] = useState("");
+  const [owner, setOwner] = useState("");
 
   const navigate = useNavigate();
 
+  // Load logged-in user ID from localStorage
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user._id) {
+      setOwner(user._id);
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Group Created:", {
-      name,
-      description,
-      category,
-    });
+
+    const authToken = localStorage.getItem("authToken");
+
+    if (!owner) {
+      console.error("Missing userID. Cannot create group.");
+      return;
+    }
 
     const newGroup = {
       name,
       description,
       groupType,
       privacySetting,
+      owner,
     };
+
+    console.log("Sending to backend:", newGroup);
 
     try {
       const res = await fetch("https://lifesync-ufkl.onrender.com/api/groups", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
         },
         body: JSON.stringify(newGroup),
       });
 
+      const data = await res.json();
+      console.log("Backend returned:", data);
+
       if (!res.ok) {
-        throw new Error("Failed to create group");
+        throw new Error(data.message || "Failed to create group");
       }
 
-      const data = await res.json();
-      console.log("Group saved to backend:", data);
-
-      // redirect after success
       navigate("/group-management");
     } catch (error) {
       console.error("Error creating group:", error);
@@ -78,30 +91,29 @@ function CreateGroup() {
               placeholder="Describe your group purpose..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              required
               className="w-full border border-gray-300 rounded-lg px-4 py-2 h-28 
                        focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
-          {/*  Group Type */}
+          {/* Group Type */}
           <div>
             <label className="block mb-2 font-medium text-gray-700">
               Category
             </label>
-
             <select
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
+              value={groupType}
+              onChange={(e) => setGroupType(e.target.value)}
+              required
               className="w-full border border-gray-300 rounded-lg px-4 py-2 
                        focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               <option value="">Choose a group type</option>
-              <option value="health">Health & Fitness</option>
-              <option value="study">Study Group</option>
-              <option value="work">Work / Team</option>
-              <option value="family">Family</option>
-              <option value="habit">Habit Tracking</option>
-              <option value="other">Other</option>
+              <option value="Personal">Personal</option>
+              <option value="Family">Family</option>
+              <option value="Work">Work</option>
+              <option value="Other">Other</option>
             </select>
           </div>
 
@@ -113,6 +125,7 @@ function CreateGroup() {
             <select
               value={privacySetting}
               onChange={(e) => setPrivacySetting(e.target.value)}
+              required
               className="w-full border border-gray-300 rounded-lg px-4 py-2 
                        focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
@@ -124,7 +137,6 @@ function CreateGroup() {
 
           {/* BUTTONS */}
           <div className="flex justify-end gap-4 pt-4 mt-6">
-            {/* Cancel */}
             <button
               type="button"
               onClick={() => navigate(-1)}
@@ -133,8 +145,7 @@ function CreateGroup() {
               Cancel
             </button>
 
-            {/* Save */}
-            <button type="submit" className="ls-btn ls-btn-primary">
+            <button type="submit" className="ls-btn ls-btn-primary" disabled={!owner}>
               Save
             </button>
           </div>

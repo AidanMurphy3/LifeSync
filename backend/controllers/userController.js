@@ -1,120 +1,275 @@
+const mongoose = require('mongoose');
+const User = require('../models/User'); // Adjust path as needed
+const bcrypt = require('bcrypt');
 
-
-const User = require("../models/User.js");
-const bcrypt = require("bcryptjs");
-
-const ChangePermissionService = require("../services/changePermissionService.js");
-
-//GET ALL USERS
-const getUsers = async (req, res) => {
-    try
-    { 
-        //fetch all
-        const users = await User.find();
-        res.status(200).json({users});
+// Helper function for consistent error handling and Mongoose ID check
+const handleControllerError = (res, error, defaultMessage, status = 500) => {
+    // 400 Bad Request for invalid Mongoose ID format
+    if (error.kind === 'ObjectId' || (error.name === 'CastError' && error.path === '_id')) {
+        return res.status(400).json({ message: 'Invalid ID format provided.', error: error.message });
     }
-    catch(e)
-    {
-        res.status(404).json({message: e.message});
+    // 400 Bad Request for validation errors or unique constraint violations
+    if (error.name === 'ValidationError' || (error.code === 11000 && error.keyPattern && error.keyPattern.email)) {
+        let msg = defaultMessage;
+        if (error.code === 11000) msg = 'Email already in use.';
+        return res.status(400).json({ message: msg, error: error.message });
     }
+    // Default 500 Server Error
+    res.status(status).json({ message: defaultMessage, error: error.message });
 };
 
-//Get a User
-const getUser = async (req, res) => {
-    try
-    {
-        const user = await User.findById(req.params.name);
-        if(!user) return res.status(404).json({message : "User not found"});
-        res.status(200).json(user);
-    }
-    catch(error){
-        res.status(500).json({message: error.message})
-    }
-}
-const getUsersById = async (req, res) => {
-    try
-    {
-        const user = await User.findById(req.params.id);
-        if(!user) return res.status(404).json({message : "User not found"});
-        res.status(200).json(user);
-    }
-    catch(error){
-        res.status(500).json({message: error.message})
-    }
-}
+// ----------------------------------------------------------------------
+// C R U D (CORE)
+// ----------------------------------------------------------------------
 
+// POST /users - Add user (C) (Registration)
 
 const addUser = async (req, res) => {
-    const { name, email, passwordHash, roleType, status } = req.body;
-
-    // Basic validation
-    if (!name || !email || !passwordHash) {
-        return res.status(400).json({ message: 'Missing required fields: name, email, and passwordHash.' });
-    }
-
     try {
-        const newUser = await User.create({
+        const { name, email, password } = req.body;
+
+        if (!name || !email || !password) {
+            return res.status(400).json({ message: 'Name, email, and password are required.' });
+        }
+
+        // Hash password
+        const passwordHash = await bcrypt.hash(password, 12);
+
+        // Create user
+        const newUser = new User({
             name,
             email,
             passwordHash,
-            roleType,
-            status
+            roleType: 'Viewer', // enforce default role
         });
 
-        // Return the created user, excluding the hash
+        await newUser.save();
+
+        // Prepare response
         const userResponse = newUser.toObject();
         delete userResponse.passwordHash;
 
-        res.status(201).json({ 
-            message: 'User created successfully', 
-            data: userResponse 
-        });
+        res.status(201).json({ message: 'User created successfully.', data: userResponse });
 
     } catch (error) {
-        // Handle Mongoose duplicate key error (for unique email)
-        if (error.code === 11000) {
-            return res.status(409).json({ message: 'Email already exists.', field: error.keyValue });
+        if (error.code === 11000) { // duplicate key
+            return res.status(400).json({ message: 'Email already exists.' });
         }
-        res.status(500).json({ 
-            message: 'Failed to create user', 
-            error: error.message 
-        });
-    }
-}
-
-
-
-//DELETE - /api/users/:id
-
-const deleteUser = async (req, res) => {
-   try{
-        const user = await User.findByIdAndDelete(req.params.id);
-        if(!user) return res.status(404).json({message: "User not found"});
-
-        res.json({message: "User deleted successful", user});
-    }
-    catch(e)
-    {
-        res.status(500).json({message: error.message});
+        console.error(error);
+        res.status(500).json({ message: 'Failed to register user.', error: error.message });
     }
 };
 
-// Change permission
 
-const changePermission = async(req, res) => {
-    try{
-        const response = ChangePermissionService.changePermission(req.body);
-
-        res.status(201).json({ 
-            message: 'Change permission successfully!', 
-            data: response
-        });
-    }catch(error){
-        res.status(500).json({ 
-            message: 'Failed to change permission!', 
-            error: error.message 
-        });
+// GET /users - Get all users (R - All)
+const getUsers = async (req, res) => {
+    try {
+        const users = await User.find().select('-passwordHash'); // Exclude hash by default
+        res.status(200).json({ data: users });
+    } catch (error) {
+        handleControllerError(res, error, 'Failed to retrieve users.', 500);
     }
-}
+};
 
-module.exports = {deleteUser, addUser, getUser, getUsers, getUsersById, changePermission};
+// GET /users/:id - Get user by ID (R - One)
+const getUsersById = async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({ message: 'Invalid ID format provided.' });
+    }
+    try {
+        const user = await User.findById(req.params.id).select('-passwordHash');
+        if (!user) return res.status(404).json({ message: 'User not found.' });
+        res.status(200).json({ data: user });
+    } catch (error) {
+        handleControllerError(res, error, 'Error retrieving user.', 500);
+    }
+};
+
+// GET /users/name/:name - Get user by name (R - By Name)
+const getUser = async (req, res) => {
+    try {
+        const user = await User.findOne({ name: req.params.name }).select('-passwordHash');
+        if (!user) return res.status(404).json({ message: 'User not found.' });
+        res.status(200).json({ data: user });
+    } catch (error) {
+        handleControllerError(res, error, 'Error retrieving user by name.', 500);
+    }
+};
+
+// PATCH /users/:id - Update user (U)
+const updateUser = async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({ message: 'Invalid ID format provided.' });
+    }
+    
+    // NOTE: If updating password, you must hash the new password before updating.
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            req.params.id, 
+            req.body, 
+            { new: true, runValidators: true }
+        ).select('-passwordHash');
+
+        if (!updatedUser) return res.status(404).json({ message: 'User not found.' });
+        
+        res.status(200).json({ message: 'User updated successfully.', data: updatedUser });
+    } catch (error) {
+        handleControllerError(res, error, 'Failed to update user.', 400);
+    }
+};
+
+// DELETE /users/:id - Delete user (D)
+const deleteUser = async (req, res) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+        return res.status(400).json({ message: 'Invalid ID format provided.' });
+    }
+    try {
+        const deletedUser = await User.findByIdAndDelete(req.params.id);
+        if (!deletedUser) return res.status(404).json({ message: 'User not found.' });
+        res.status(200).json({ message: 'User deleted successfully.' });
+    } catch (error) {
+        handleControllerError(res, error, 'Failed to delete user.', 500);
+    }
+};
+
+// ----------------------------------------------------------------------
+// U T I L I T Y / P E R M I S S I O N S
+// ----------------------------------------------------------------------
+
+// PATCH /users/:id/permission - Change user role/permission
+const changePermission = async (req, res) => {
+    const { roleType } = req.body;
+    const userId = req.params.id;
+    
+    // NOTE: You'd typically add authentication/authorization checks here (e.g., must be Admin).
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(400).json({ message: 'Invalid user ID format.' });
+    }
+
+    try {
+        const updatedUser = await User.findByIdAndUpdate(
+            userId,
+            { roleType: roleType },
+            { new: true, runValidators: true }
+        ).select('-passwordHash');
+
+        if (!updatedUser) return res.status(404).json({ message: 'User not found.' });
+        
+        res.status(200).json({ 
+            message: `User role updated to ${updatedUser.roleType}.`, 
+            data: updatedUser 
+        });
+    } catch (error) {
+        handleControllerError(res, error, 'Failed to change user permission.', 400);
+    }
+};
+
+// ----------------------------------------------------------------------
+// F R I E N D S H I P (Placeholder Logic)
+// ----------------------------------------------------------------------
+
+// POST /users/:recipientId/send-request - Send friend request
+const sendFriendRequest = async (req, res) => {
+    // Replace with your actual authenticated user ID extraction (e.g., from JWT payload)
+    const senderId = req.user ? req.user.id : 'MOCK_SENDER_ID'; 
+    const recipientId = req.params.recipientId;
+    
+    if (!mongoose.Types.ObjectId.isValid(recipientId)) {
+        return res.status(400).json({ message: 'Invalid recipient ID format.' });
+    }
+    if (senderId === recipientId) {
+        return res.status(400).json({ message: 'Cannot send a request to yourself.' });
+    }
+
+    try {
+        // Use $addToSet to prevent duplicates
+        // 1. Update the recipient (add sender to received list)
+        await User.findByIdAndUpdate(recipientId, {
+            $addToSet: { friendRequestsReceived: senderId }
+        });
+
+        // 2. Update the sender (add recipient to sent list)
+        const sender = await User.findByIdAndUpdate(senderId, {
+            $addToSet: { friendRequestsSent: recipientId }
+        }, { new: true });
+
+        res.status(200).json({ 
+            message: 'Friend request sent successfully. Waiting for acceptance.',
+            data: sender.friendRequestsSent
+        });
+    } catch (error) {
+        handleControllerError(res, error, 'Failed to send friend request.', 500); 
+    }
+};
+
+// POST /users/:senderId/accept-request - Accept friend request
+const acceptFriendRequest = async (req, res) => {
+    // Replace with your actual authenticated user ID (the one accepting the request)
+    const acceptorId = req.user ? req.user.id : 'MOCK_ACCEPTOR_ID'; 
+    const senderId = req.params.senderId;
+    
+    if (!mongoose.Types.ObjectId.isValid(senderId)) {
+        return res.status(400).json({ message: 'Invalid sender ID format.' });
+    }
+
+    try {
+        // 1. Add both users to each other's friends list
+        await User.findByIdAndUpdate(acceptorId, {
+            $addToSet: { friends: senderId },
+            $pull: { friendRequestsReceived: senderId } // Remove from received list
+        });
+
+        const sender = await User.findByIdAndUpdate(senderId, {
+            $addToSet: { friends: acceptorId },
+            $pull: { friendRequestsSent: acceptorId } // Remove from sent list
+        }, { new: true }).select('-passwordHash');
+
+        res.status(200).json({ 
+            message: 'Friend request accepted!',
+            data: sender
+        });
+    } catch (error) {
+        handleControllerError(res, error, 'Failed to accept friend request.', 500);
+    }
+};
+
+// DELETE /users/:friendId/remove-friend - Remove a friend
+const removeFriend = async (req, res) => {
+    const userId = req.user ? req.user.id : 'MOCK_USER_ID';
+    const friendId = req.params.friendId;
+
+    if (!mongoose.Types.ObjectId.isValid(friendId)) {
+        return res.status(400).json({ message: 'Invalid friend ID format.' });
+    }
+    
+    try {
+        // 1. Remove friendId from userId's friends list
+        await User.findByIdAndUpdate(userId, {
+            $pull: { friends: friendId }
+        });
+
+        // 2. Remove userId from friendId's friends list
+        await User.findByIdAndUpdate(friendId, {
+            $pull: { friends: userId }
+        });
+
+        res.status(200).json({ message: 'Friend removed successfully.' });
+    } catch (error) {
+        handleControllerError(res, error, 'Failed to remove friend.', 500);
+    }
+};
+
+
+module.exports = {
+    getUser, 
+    getUsersById,
+    getUsers, 
+    deleteUser, 
+    addUser, 
+    updateUser, // Assuming this is defined
+    changePermission,
+    sendFriendRequest,
+    acceptFriendRequest,
+    removeFriend
+};
