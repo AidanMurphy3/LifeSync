@@ -47,7 +47,7 @@ function App() {
         <Nav />
 
         <div className="flex flex-1">
-          <main className="flex-1 ">
+          <main className="flex-1" style={{ paddingBottom: "0px" }}>
             <Routes>
               {/* home */}
               <Route path="/" element={<HomePage />} />
@@ -61,7 +61,7 @@ function App() {
               />
               <Route path="/group/create" element={<CreateGroup />} />
               <Route path="/group/add-members" element={<AddMembers />} />
-              <Route path="/group/edit" element={<EditGroup />} />
+              <Route path="/group/edit/:id" element={<EditGroup />} />
               <Route path="/group/delete" element={<DeleteGroup />} />
               <Route path="/group/assign-roles" element={<AssignRoles />} />
               <Route path="/group/leave" element={<LeaveGroup />} />
