@@ -2,6 +2,7 @@
 import React from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { useContext } from "react";
+import { Toaster } from "react-hot-toast";
 
 import "./App.css";
 import "@styles/main.css";
@@ -42,6 +43,7 @@ function App() {
   const isLoggedIn = !!user;
   return (
     <>
+      <Toaster position="top-right" />
       {location.pathname !== "/Authentication" && !isLoggedIn && <Sidebar />}
       <div className="min-h-screen flex flex-col">
         <Nav />

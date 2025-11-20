@@ -1,17 +1,22 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useGroups } from "@context/GroupsContext/GroupProvider";
 import RoundDashboard from "@components/Dashboard/Dashboard";
+import toast from "react-hot-toast";
 
-import { FaBell } from "react-icons/fa6";
+import { FaBell, FaDeleteLeft } from "react-icons/fa6";
 import { IoIosLogOut } from "react-icons/io";
 import { FaRegEdit } from "react-icons/fa";
 
 const GroupManagementPage = () => {
+  const API_BASE = "https://lifesync-ufkl.onrender.com/api/groups";
+
   const { groups, setGroups } = useGroups();
   const { id } = useParams();
   const [selectedGroup, setSelectedGroup] = useState(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const found = groups.find((g) => g._id === id);
@@ -20,8 +25,44 @@ const GroupManagementPage = () => {
 
   console.log(selectedGroup);
 
+  //delete feature (GS5)
+  const handleDelete = async () => {
+    if (!selectedGroup?._id) return;
+
+    const confirmDelete = window.confirm(
+      `Do you really want to delete "${selectedGroup.name}"?`
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      const res = await fetch(`${API_BASE}/${selectedGroup._id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        toast.error(data.message || "Failed to delete group");
+        return;
+      }
+
+      toast.success("Group deleted successfully!");
+
+      setGroups((prev) => prev.filter((g) => g._id !== selectedGroup._id));
+      // Redirect to HomePage
+      navigate("/");
+    } catch (err) {
+      toast.error(err.message || "Error deleting group");
+    }
+  };
+
   if (!selectedGroup) {
-    return <p className="p-6 text-center">Group not found.</p>;
+    navigate("/");
+    return null;
   }
   console.log(groups);
   return (
@@ -48,6 +89,11 @@ const GroupManagementPage = () => {
           <IoIosLogOut
             className="w-[24px] h-[24px] cursor-pointer"
             style={{ color: "#d20429" }}
+          />
+          <FaDeleteLeft
+            className="w-[24px] h-[24px] cursor-pointer"
+            style={{ color: "#d20429" }}
+            onClick={handleDelete}
           />
         </div>
       </div>
