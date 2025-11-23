@@ -40,6 +40,7 @@ export const GroupProvider = ({ children }) => {
   }, []);
 
   console.log(groups);
+
   //---------------------------
   //TASK FUNCTIONS
   //---------------------------
@@ -88,12 +89,15 @@ export const GroupProvider = ({ children }) => {
     return newTask;
   };
 
-  const updateTask = async (groupId, taskId, updates) => {
-    const res = await fetch(`${API_BASE}/${groupId}/tasks/${taskId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updates),
-    });
+  const updateTask = async (taskId, updates) => {
+    const res = await fetch(
+      `https://lifesync-ufkl.onrender.com/api/tasks/${taskId}`,
+      {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updates),
+      }
+    );
 
     const data = await res.json();
 

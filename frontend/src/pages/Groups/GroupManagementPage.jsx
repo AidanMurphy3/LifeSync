@@ -114,14 +114,14 @@ const GroupManagementPage = () => {
           {selectedGroup.name}
         </span>
         <div className="flex w-[10%] justify-between  justify-items-center items-center">
-          <Link to={`/group/edit/${selectedGroup._id}`} className="nav-link">
+          <Link to={`/group/edit/${selectedGroup._id}`}>
             <FaRegEdit
               className="w-[24px] h-[24px] cursor-pointer"
               style={{ color: "#24a95e" }}
             />
           </Link>
           <FaBell
-            className="w-[24px] h-[24px] cursor-pointer"
+            className="w-[24px] h-[24px] cursor-pointer "
             style={{ color: "#24a95e" }}
           />
           <IoIosLogOut
@@ -184,6 +184,12 @@ const GroupManagementPage = () => {
                         }}
                       >
                         {`${task.title} (${task.assignedTo})`}
+                        <Link to={`/task/edit/${task._id}`}>
+                          <FaRegEdit
+                            className="w-[24px] h-[24px] cursor-pointer"
+                            style={{ color: "white" }}
+                          />
+                        </Link>
                       </div>
 
                       {/* completed */}
@@ -206,7 +212,7 @@ const GroupManagementPage = () => {
 
                     <div style={{ color: "#F9FAFB" }}>{task.description}</div>
                     <div style={{ color: "#F9FAFB" }}>
-                      Type: {task.type} | Status: hi
+                      Type: {task.type} | Status:
                       <span
                         style={{
                           color:
@@ -244,7 +250,7 @@ const GroupManagementPage = () => {
         </div>
 
         {/* chat section */}
-        <div className="bg-[var(--ls-group)] h-screen flex flex-col">
+        <div className="bg-[var(--ls-bg)] h-screen flex flex-col">
           {/* header */}
           <div
             className="mx-auto w-fit"

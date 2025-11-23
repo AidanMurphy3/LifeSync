@@ -74,8 +74,7 @@ function App() {
                 element={<CreateTaskHabit />}
               />
               <Route path="/task/assign" element={<AssignTask />} />
-              <Route path="/task/edit" element={<EditTaskHabit />} />
-              <Route path="/task/approve" element={<ApproveTaskHabit />} />
+              <Route path="/task/edit/:id" element={<EditTaskHabit />} />
               <Route path="/task/member-add" element={<MemberAddTaskHabit />} />
               <Route path="/task/member-view" element={<ViewMemberTasks />} />
               <Route path="/task/viewer" element={<ViewerTaskStatus />} />
