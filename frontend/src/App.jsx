@@ -69,8 +69,10 @@ function App() {
               <Route path="/group/leave" element={<LeaveGroup />} />
 
               {/* tasks & habits */}
-              <Route path="/task-habits" element={<TaskHabitPage />} />
-              <Route path="/task/create" element={<CreateTaskHabit />} />
+              <Route
+                path="/task/create/:groupId"
+                element={<CreateTaskHabit />}
+              />
               <Route path="/task/assign" element={<AssignTask />} />
               <Route path="/task/edit" element={<EditTaskHabit />} />
               <Route path="/task/approve" element={<ApproveTaskHabit />} />

@@ -6,7 +6,7 @@ const userRoutes = require("./routes/userRoutes.js");
 const groupRoutes = require("./routes/groupRoutes.js");
 const groupMembershipRoutes = require("./routes/groupMembershipRoutes.js");
 const taskRoutes = require("./routes/taskRoutes.js");
-const authRoutes = require("./routes/authRoute.js")
+const authRoutes = require("./routes/authRoute.js");
 
 dotenv.config();
 connectDB();
@@ -17,7 +17,7 @@ const app = express();
 app.use(
   cors({
     origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
@@ -27,14 +27,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ROUTES
-app.use('/api/auth', authRoutes);
+app.use("/api/auth", authRoutes);
 
 app.use("/api/users", userRoutes);
 app.use("/api/groups", groupRoutes);
 app.use("/api/groupMemberships", groupMembershipRoutes);
 app.use("/api/tasks", taskRoutes);
-
-
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on PORT:${PORT}`));
