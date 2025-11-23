@@ -206,7 +206,7 @@ const GroupManagementPage = () => {
 
                     <div style={{ color: "#F9FAFB" }}>{task.description}</div>
                     <div style={{ color: "#F9FAFB" }}>
-                      Type: {task.type} | Status:
+                      Type: {task.type} | Status: hi
                       <span
                         style={{
                           color:
