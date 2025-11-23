@@ -35,7 +35,7 @@ const EditTaskHabit = () => {
 
   const handleSave = async (updates) => {
     try {
-      await updateTask(taskId, updates);
+      await updateTask(task.groupId, taskId, updates);
       toast.success("Task updated!");
       fetchTasks(task.groupId);
       navigate(`/group-management/${task.groupId}`);

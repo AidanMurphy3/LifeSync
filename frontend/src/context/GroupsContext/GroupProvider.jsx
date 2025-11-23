@@ -79,17 +79,15 @@ export const GroupProvider = ({ children }) => {
 
     if (!res.ok) throw new Error(data.message);
 
-    const newTask = data.data;
-
     setTasksByGroup((prev) => ({
       ...prev,
-      [groupId]: [...(prev[groupId] || []), newTask],
+      [groupId]: [...(prev[groupId] || []), data],
     }));
 
-    return newTask;
+    return data;
   };
 
-  const updateTask = async (taskId, updates) => {
+  const updateTask = async (groupId, taskId, updates) => {
     const res = await fetch(
       `https://lifesync-ufkl.onrender.com/api/tasks/${taskId}`,
       {
@@ -103,7 +101,7 @@ export const GroupProvider = ({ children }) => {
 
     setTasksByGroup((prev) => ({
       ...prev,
-      [groupId]: prev[groupId].map((t) => (t._id === taskId ? data.task : t)),
+      [groupId]: prev[groupId].map((t) => (t._id === taskId ? data : t)),
     }));
   };
 
