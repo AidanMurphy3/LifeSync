@@ -3,9 +3,12 @@ import { useGroups } from "@context/GroupsContext/GroupProvider";
 import { Link } from "react-router-dom";
 import Card from "@components/Cards/Card";
 import Buttons from "@components/Buttons/Buttons";
+import { quotes } from "./quotes";
 
 function HomePage() {
-  const { groups, loadingGroups, groupsError } = useGroups();
+  const { groups, loadingGroups, groupsError, tasksByGroup } = useGroups();
+
+  const quote = quotes[Math.floor(Math.random() * quotes.length)];
 
   if (loadingGroups) return <p>Loading groups...</p>;
 
@@ -84,6 +87,7 @@ function HomePage() {
                   id={group._id}
                   groupName={group.name}
                   groupType={group.groupType}
+                  tasks={tasksByGroup[group._id] || []}
                 />
               ))
             )}
@@ -91,41 +95,10 @@ function HomePage() {
         </div>
       </section>
 
-      {/* QUICK ACTIONS */}
-      <section className="ls-section ls-section-alt">
-        <div className="ls-container">
-          <div className="ls-section-header">
-            <h2>Quick actions</h2>
-          </div>
-          <div className="ls-quick-grid">
-            <div className="ls-quick-card">
-              <h3>Go to Group Management page</h3>
-              <p>
-                All Iteration 1 group-owner stories (create/edit/delete group,
-                add members, assign roles) live on this page.
-              </p>
-              <Link
-                className="ls-btn ls-btn-small ls-btn-primary"
-                to="/group-management"
-              >
-                Open Group Management
-              </Link>
-            </div>
-
-            <div className="ls-quick-card">
-              <h3>Go to Task &amp; Habit page</h3>
-              <p>
-                All Iteration 1 task and habit stories (create/assign/edit, view
-                status) live on this page.
-              </p>
-              <Link
-                className="ls-btn ls-btn-small ls-btn-primary"
-                to="/task-habits"
-              >
-                Open Task &amp; Habit Management
-              </Link>
-            </div>
-          </div>
+      {/* random quote */}
+      <section className="ls-section">
+        <div className="ls-container text-center py-6">
+          <p className="text-lg italic opacity-80">“{quote}”</p>
         </div>
       </section>
     </>

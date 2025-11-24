@@ -16,26 +16,27 @@ import Sidebar from "@components/Sidebar/Sidebar.jsx";
 // high-level pages
 import HomePage from "@pages/HomePage/homePage.jsx";
 import GroupManagementPage from "@pages/Groups/GroupManagementPage.jsx";
-import TaskHabitPage from "@pages/TaskHabitPage.jsx";
 import Authen from "@pages/LoginSignUp/Login.jsx";
 
 // group management story pages
-import CreateGroup from "./pages/GroupManagement/CreateGroup.jsx";
-import AddMembers from "./pages/GroupManagement/AddMembers.jsx";
-import EditGroup from "./pages/GroupManagement/EditGroup.jsx";
-import DeleteGroup from "./pages/GroupManagement/DeleteGroup.jsx";
-import AssignRoles from "./pages/GroupManagement/AssignRoles.jsx";
-import LeaveGroup from "./pages/GroupManagement/LeaveGroup.jsx";
+import CreateGroup from "@pages/GroupManagement/CreateGroup.jsx";
+import AddMembers from "@pages/GroupManagement/AddMembers.jsx";
+import EditGroup from "@pages/GroupManagement/EditGroup.jsx";
+import DeleteGroup from "@pages/GroupManagement/DeleteGroup.jsx";
+import AssignRoles from "@pages/GroupManagement/AssignRoles.jsx";
+import LeaveGroup from "@pages/GroupManagement/LeaveGroup.jsx";
 
 // task/habit story pages
 import CreateTaskHabit from "./pages/TaskHabit/CreateTaskHabit.jsx";
 import AssignTask from "./pages/TaskHabit/AssignTask.jsx";
 import EditTaskHabit from "./pages/TaskHabit/EditTaskHabit.jsx";
-import ApproveTaskHabit from "./pages/TaskHabit/ApproveTaskHabit.jsx";
 import MemberAddTaskHabit from "./pages/TaskHabit/MemberAddTaskHabit.jsx";
 import ViewMemberTasks from "./pages/TaskHabit/ViewMemberTasks.jsx";
 import ViewerTaskStatus from "./pages/TaskHabit/ViewerTaskStatus.jsx";
 import { sidebarContext } from "./context/Sidebar/SidebarProvider.jsx";
+
+//addFriends
+import AddFriends from "@pages/AddFriends/AddFriends.jsx";
 
 function App() {
   const location = useLocation();
@@ -78,6 +79,9 @@ function App() {
               <Route path="/task/member-add" element={<MemberAddTaskHabit />} />
               <Route path="/task/member-view" element={<ViewMemberTasks />} />
               <Route path="/task/viewer" element={<ViewerTaskStatus />} />
+
+              <Route path="/task/viewer" element={<ViewerTaskStatus />} />
+              <Route path="/friends" element={<AddFriends />} />
             </Routes>
           </main>
 

@@ -118,7 +118,7 @@ const TaskForm = ({
             .filter((m) => m._id !== user?._id)
             .map((m) => (
               <option key={m._id} value={m._id}>
-                {m.username || m.email || m._id}
+                {m.username}
               </option>
             ))}
         </select>

@@ -68,6 +68,16 @@ export const GroupProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    if (groups.length > 0) {
+      groups.forEach((g) => {
+        fetchTasks(g._id);
+      });
+    }
+  }, [groups]);
+
+  console.log(tasksByGroup);
+
   const addTask = async (groupId, taskData) => {
     const res = await fetch(`https://lifesync-ufkl.onrender.com/api/tasks`, {
       method: "POST",

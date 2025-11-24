@@ -96,6 +96,16 @@ const GroupManagementPage = () => {
     }
   };
 
+  const getMemberName = (userId) => {
+    if (!selectedGroup?.members) return "Unknown";
+
+    const found = selectedGroup.members.find(
+      (m) => m.user?._id === userId || m.user === userId || m._id === userId
+    );
+
+    return found?.user?.username || found?.user?.name || "Unknown";
+  };
+
   if (!selectedGroup) {
     navigate("/");
     return null;
@@ -144,7 +154,7 @@ const GroupManagementPage = () => {
         >
           {/* Dashboard */}
           <div className="col-span-1" style={{ padding: 20 }}>
-            <RoundDashboard tasks={selectedGroup.members ?? []} size="100%" />
+            <RoundDashboard tasks={tasks ?? []} size="100%" />
           </div>
 
           {/* tasks */}
@@ -183,7 +193,8 @@ const GroupManagementPage = () => {
                           fontWeight: "Bold",
                         }}
                       >
-                        {`${task.title} (${task.assignedTo})`}
+                        {/* title + assignedTo */}
+                        {`${task.title} (${getMemberName(task.assignedTo)})`}
                         <Link to={`/task/edit/${task._id}`}>
                           <FaRegEdit
                             className="w-[24px] h-[24px] cursor-pointer"

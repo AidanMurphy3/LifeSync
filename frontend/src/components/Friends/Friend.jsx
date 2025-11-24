@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Buttons from "../Buttons/Buttons";
 
 function FriendsColumn() {
@@ -7,7 +8,9 @@ function FriendsColumn() {
         <h2 className="text-[var(--ls-text-muted)] font-semibold mb-4">
           Friends
         </h2>
-        <Buttons text="+ Add Friends" variant="secondary" />
+        <Link to="/friends">
+          <Buttons text="+ Add Friends" variant="secondary" />
+        </Link>
       </div>
 
       <ul className="space-y-2">

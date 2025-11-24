@@ -13,6 +13,8 @@ const CreateTaskHabit = () => {
 
   const selectedGroup = groups.find((g) => g._id === groupId);
 
+  console.log(selectedGroup);
+
   const handleCreate = async (taskData) => {
     try {
       await addTask(groupId, {
