@@ -1,20 +1,23 @@
 const GroupMembership = require("../models/groupMembershipModel");
 
-const updateRole = async(data) => {
-    const {role, groupMembershipId} = data;
+const updateRole = async (data) => {
+  const { role, groupMembershipId } = data;
 
-    if(!role){
-        throw new Error("Missing role!");
-    }
+  if (!role) {
+    throw new Error("Missing role!");
+  }
 
-    const groupMembership = await GroupMembership.findById(groupMembershipId);
-    groupMembership.role = role;
+  const groupMembership = await GroupMembership.findById(groupMembershipId);
+  groupMembership.role = role;
 
-    groupMembership.save();
+  groupMembership.save();
 
-    const response = groupMembership.toObject();
-    response.groupMembershipId = response._id;
-    delete response._id;
+  const response = groupMembership.toObject();
+  response.groupMembershipId = response._id;
+  delete response._id;
 
-    return response;
-}
+  return response;
+};
+module.exports = {
+  updateRole,
+};

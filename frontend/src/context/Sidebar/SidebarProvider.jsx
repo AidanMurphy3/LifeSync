@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 export const sidebarContext = createContext();
 
 export const SidebarProvider = ({ children }) => {
@@ -38,3 +38,4 @@ export const SidebarProvider = ({ children }) => {
     </sidebarContext.Provider>
   );
 };
+export const useSidebar = () => useContext(sidebarContext);

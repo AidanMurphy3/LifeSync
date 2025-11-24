@@ -54,11 +54,11 @@ export const GroupProvider = ({ children }) => {
       );
       const data = await res.json();
 
-      console.log("SERVER RESPONSE", data);
+      console.log("SERVER RESPONSE", data.data);
 
       setTasksByGroup((prev) => ({
         ...prev,
-        [groupId]: data,
+        [groupId]: data.data,
       }));
 
       return data;

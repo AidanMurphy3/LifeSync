@@ -2,9 +2,11 @@ import React from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useGroups } from "@context/GroupsContext/GroupProvider";
+import { useSidebar } from "@context/Sidebar/SidebarProvider";
 import RoundDashboard from "@components/Dashboard/Dashboard";
 import toast from "react-hot-toast";
 import Buttons from "@components/Buttons/Buttons";
+import Chatbox from "@components/Chat/Chatbox";
 
 import { FaBell, FaDeleteLeft } from "react-icons/fa6";
 import {
@@ -27,6 +29,7 @@ const GroupManagementPage = () => {
   } = useGroups();
   const { id } = useParams();
   const [selectedGroup, setSelectedGroup] = useState(null);
+  const { user } = useSidebar();
 
   const navigate = useNavigate();
 
@@ -261,26 +264,7 @@ const GroupManagementPage = () => {
         </div>
 
         {/* chat section */}
-        <div className="bg-[var(--ls-bg)] h-screen flex flex-col">
-          {/* header */}
-          <div
-            className="mx-auto w-fit"
-            style={{
-              fontSize: "20px",
-              fontWeight: "Bold",
-              marginBottom: "10px",
-            }}
-          >
-            Chat
-          </div>
-          {/* chat contents */}
-          <div>content</div>
-          <input
-            type="text"
-            className="mt-auto self-end bg-[var(--ls-surface-soft)] w-full h-[50px]"
-            placeholder="Type a message"
-          />
-        </div>
+        <Chatbox roomId={selectedGroup._id} user={user} />
       </div>
     </section>
   );

@@ -7,6 +7,8 @@ function Card({ id, groupName, groupType }) {
   const { tasksByGroup } = useGroups();
   const tasks = tasksByGroup[id] || [];
 
+  console.log(tasks);
+
   return (
     <div
       className="bg-[var(--ls-primary)] rounded-[20px] shadow w-full  text-[var(--ls-text-muted)] flex flex-col"
