@@ -22,6 +22,9 @@ export const GroupProvider = ({ children }) => {
         return;
       }
 
+      console.log("LOGGED-IN USER FROM CONTEXT:", user);
+      console.log("SENDING userId TO BACKEND:", user?._id);
+
       const res = await fetch(`${API_BASE}?userId=${user._id}`);
       const data = await res.json();
       console.log("Fetched groups:", data);

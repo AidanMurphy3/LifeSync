@@ -5,17 +5,18 @@ const getAllGroups = async (req, res) => {
   try {
     const { userId } = req.query;
     let groups;
-    if (userId) {
-      if (!mongoose.Types.ObjectId.isValid(userId)) {
-        return res.status(200).json({ data: [] });
-      }
-
-      groups = await Group.find({
-        $or: [{ owner: userId }, { "members.user": userId }],
-      }).sort({ createdAt: -1 });
-    } else {
-      groups = [];
+    if (!userId) {
+      return res.status(200).json({ data: [] });
     }
+
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(200).json({ data: [] });
+    }
+
+    const objectId = new mongoose.Types.ObjectId(userId);
+    groups = await Group.find({
+      $or: [{ owner: objectId }, { "members.user": objectId }],
+    }).sort({ createdAt: -1 });
 
     res.status(200).json({ data: groups });
   } catch (e) {

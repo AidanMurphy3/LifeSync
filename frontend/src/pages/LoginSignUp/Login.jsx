@@ -33,7 +33,7 @@ function Authen() {
         const payload = isLogin
           ? { email: values.email, password: values.password }
           : {
-              username: values.username,
+              name: values.username,
               email: values.email,
               password: values.password,
             };

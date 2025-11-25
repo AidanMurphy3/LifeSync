@@ -5,7 +5,7 @@ export const SidebarProvider = ({ children }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem("user");
 
     if (!token) {
       setIsOpen(true); // show sidebar if NOT logged in
