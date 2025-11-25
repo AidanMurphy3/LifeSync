@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect, useContext } from "react";
+import { useSidebar } from "@context/Sidebar/SidebarProvider";
 
 export const GroupContext = createContext();
 const API_BASE = "https://lifesync-ufkl.onrender.com/api/groups";
@@ -7,6 +8,7 @@ export const GroupProvider = ({ children }) => {
   const [groups, setGroups] = useState([]);
   const [loadingGroups, setLoadingGroups] = useState(true);
   const [groupsError, setGroupsError] = useState(null);
+  const { user } = useSidebar();
 
   //fetching groups
   const fetchGroups = async () => {
@@ -14,15 +16,13 @@ export const GroupProvider = ({ children }) => {
       setLoadingGroups(true);
       setGroupsError(null);
 
-      const user = localStorage.getItem("user");
-
       if (!user) {
         setGroups([]); // user not logged in → no groups
         setLoadingGroups(false);
         return;
       }
 
-      const res = await fetch(API_BASE);
+      const res = await fetch(`${API_BASE}?userId=${user._id}`);
       const data = await res.json();
       console.log("Fetched groups:", data);
 
@@ -37,7 +37,7 @@ export const GroupProvider = ({ children }) => {
 
   useEffect(() => {
     fetchGroups();
-  }, []);
+  }, [user]);
 
   console.log(groups);
 

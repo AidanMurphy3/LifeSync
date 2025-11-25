@@ -3,9 +3,20 @@ const Group = require("../models/groupModel");
 // GET all groups (R - Read All)
 const getAllGroups = async (req, res) => {
   try {
-    // Find all groups, sorting by creation date (newest first)
-    // Optionally populate owner/members here if needed for list view
-    const groups = await Group.find().sort({ createdAt: -1 });
+    const { userId } = req.query;
+    let groups;
+    if (userId) {
+      if (!mongoose.Types.ObjectId.isValid(userId)) {
+        return res.status(200).json({ data: [] });
+      }
+
+      groups = await Group.find({
+        $or: [{ owner: userId }, { "members.user": userId }],
+      }).sort({ createdAt: -1 });
+    } else {
+      groups = [];
+    }
+
     res.status(200).json({ data: groups });
   } catch (e) {
     // Return 500 for server-side error (e.g., database connection issue)

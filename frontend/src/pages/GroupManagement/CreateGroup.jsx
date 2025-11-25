@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGroups } from "@context/GroupsContext/GroupProvider";
 import GroupForm from "@components/GroupForm/GroupForm";
+import { useSidebar } from "@context/Sidebar/SidebarProvider";
 
 function CreateGroup() {
   const [form, setForm] = useState({
@@ -11,15 +12,15 @@ function CreateGroup() {
     privacySetting: "",
   });
 
+  const { user } = useSidebar();
   const [owner, setOwner] = useState("");
 
-  const { fetchGroups } = useGroups();
+  const { fetchGroups, groups } = useGroups();
 
   const navigate = useNavigate();
 
   // Load logged-in user ID from localStorage
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user"));
     if (user && user._id) {
       setOwner(user._id);
     }
@@ -59,7 +60,7 @@ function CreateGroup() {
 
       await fetchGroups();
 
-      navigate("/group-management");
+      navigate(`/group-management/${data.data._id}`);
     } catch (error) {
       console.error("Error creating group:", error);
     }
