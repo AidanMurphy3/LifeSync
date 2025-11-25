@@ -1,4 +1,5 @@
 const Group = require("../models/groupModel");
+const mongoose = require("mongoose");
 
 // GET all groups (R - Read All)
 const getAllGroups = async (req, res) => {

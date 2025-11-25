@@ -53,14 +53,15 @@ function CreateGroup() {
 
       const data = await res.json();
       console.log("Backend returned:", data);
+      console.log("OWNER:", owner);
+      console.log("FORM DATA SENT:", newGroup);
 
       if (!res.ok) {
         throw new Error(data.message || "Failed to create group");
       }
 
-      await fetchGroups();
-
       navigate(`/group-management/${data.data._id}`);
+      await fetchGroups();
     } catch (error) {
       console.error("Error creating group:", error);
     }
