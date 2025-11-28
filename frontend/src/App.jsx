@@ -18,6 +18,9 @@ import HomePage from "@pages/HomePage/homePage.jsx";
 import GroupManagementPage from "@pages/Groups/GroupManagementPage.jsx";
 import Authen from "@pages/LoginSignUp/Login.jsx";
 
+import MemberProfilePage from "@pages/MemberProfilePage.jsx";
+
+
 // group management story pages
 import CreateGroup from "@pages/GroupManagement/CreateGroup.jsx";
 import AddMembers from "@pages/GroupManagement/AddMembers.jsx";
@@ -82,6 +85,9 @@ function App() {
 
               <Route path="/task/viewer" element={<ViewerTaskStatus />} />
               <Route path="/friends" element={<AddFriends />} />
+
+             <Route path="/member/profile" element={<MemberProfilePage />} />  
+
             </Routes>
           </main>
 
